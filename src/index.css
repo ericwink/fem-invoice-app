@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&display=swap");
+
+:root {
+  /* ---- colors ---- */
+
+  /* primaries */
+  --clr-full-purple: hsl(252, 94, 67);
+  --clr-pale-purple: hsl(252, 100, 73);
+  --clr-full-red: hsl(0, 80, 63);
+  --clr-pale-red: hsl(0, 100, 80);
+  --clr-pale-blue: hsl(231, 37, 63);
+
+  /* neutrals */
+  --clr-neutral-100: hsl(240, 27, 98);
+  --clr-neutral-200: hsl(231, 73, 93);
+  --clr-neutral-300: hsl(231, 20, 61);
+  --clr-neutral-400: hsl(233, 30, 21);
+  --clr-neutral-500: hsl(233, 31, 17);
+  --clr-neutral-600: hsl(233, 30, 11);
+  --clr-neutral-700: hsl(228, 29, 7);
+
+  /* ---- fonts ---- */
+
+  /* font family */
+  --ff-all: "League Spartan", sans-serif;
+
+  /* font sizes */
+  --fs-100: 0.688rem; /* 11px */
+  --fs-200: 0.75rem; /* 12px */
+  --fs-300: 0.938rem; /* 15px */
+  --fs-400: 1.375rem; /* 22px */
+  --fs-500: 1.5rem; /* 24px */
+  --fs-600: 2.25rem; /* 36px */
+
+  /* weights */
+  --fw-medium: 500;
+  --fw-bold: 700;
+
+  /* heights */
+  --lh-100: 15px;
+  --lh-200: 18px;
+  --lh-300: 22px;
+  --lh-400: 24px;
+  --lh-500: 36px;
+
+  /* spacing */
+  --ls-100: -1;
+  --ls-200: -0.8;
+  --ls-300: -0.63;
+  --ls-400: -0.25;
+  --ls-500: -0.23;
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin, inherit font */
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  font-size: 16px;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
