@@ -91,9 +91,9 @@ body {
   font-size: 16px;
 }
 
-/* A elements that don't have a class get default styles */
-a:not([class]) {
-  text-decoration-skip-ink: auto;
+/* Remove default link styling */
+a {
+  text-decoration: none;
 }
 
 /* Make images easier to work with */
@@ -139,7 +139,7 @@ h1 {
   letter-spacing: var(--ls-300);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 800px) {
   h1 {
     font-weight: var(--fw-bold);
     font-size: var(--fs-600);
@@ -299,6 +299,12 @@ p.smaller {
 
 #invoice-preview img {
   display: none;
+}
+
+@media (hover: hover) {
+  #invoice-preview:hover {
+    border: 1px solid var(--clr-full-purple);
+  }
 }
 
 /* --- tablet style --- */

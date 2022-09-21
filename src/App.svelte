@@ -1,23 +1,26 @@
 <script>
-  import data from './assets/data.json'
   import {theme} from './store'
-  import InvoicePreview from './components/InvoicePreview.svelte'
-  
+  import Router from 'svelte-spa-router'
+  import InvoiceDetail from './Routes/InvoiceDetail.svelte';
+  import Home from './Routes/Home.svelte';
+
+let routes = {
+  "/": Home,
+  "/Invoice/:id": InvoiceDetail
+}
+
+  // toggle dark/light theme for application
 const toggleTheme = () =>{
   theme.update(current => current === 'light' ? current = 'dark' : current = 'light')
   }
 
 </script>
 
-<main>
-  <h1>Test</h1>
-  <h2>{$theme}</h2>
+<div id="App" class={$theme}>
+<main class="container">
+  <Router {routes} />
 
-<ul>
-  {#each data as invoice}
-  <InvoicePreview {invoice}/>
-  {/each}
-</ul>
 
   <button on:click={toggleTheme}>Change Theme</button>
   </main>
+</div>
