@@ -1,0 +1,1 @@
+<button class='btn delete-btn'>Delete</button>
