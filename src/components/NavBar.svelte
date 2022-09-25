@@ -19,7 +19,7 @@
       <img src="/icon-sun.svg" alt="moon icon - dark mode" />
     {/if}
   </button>
-  <img class="avatar" src="../../public/image-avatar.jpg" alt="user avatar" />
+  <img class="avatar" src="/image-avatar.jpg" alt="user avatar" />
 </nav>
 
 <style>
@@ -77,6 +77,34 @@
   @media (hover: hover) {
     button:hover {
       cursor: pointer;
+    }
+  }
+
+  @media (min-width: 900px) {
+    nav {
+      position: absolute;
+      left: 0;
+      width: 100px;
+      height: 100%;
+      grid-template-columns: 1fr;
+      grid-template-rows: 2fr 0.3fr 0.3fr;
+    }
+    .logo-box-dark-purple {
+      width: 100%;
+    }
+
+    .logo-box-pale-purple {
+      width: 100%;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+    }
+
+    button {
+      border-right: none;
+      border-bottom: 1px solid var(--clr-neutral-300);
     }
   }
 </style>

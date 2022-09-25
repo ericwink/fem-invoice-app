@@ -139,7 +139,7 @@ h1 {
   letter-spacing: var(--ls-300);
 }
 
-@media (min-width: 800px) {
+@media (min-width: 900px) {
   h1 {
     font-weight: var(--fw-bold);
     font-size: var(--fs-600);
@@ -213,9 +213,10 @@ button.btn {
 
 }
 /* desktop style */
-@media (min-width: 800px) {
+@media (min-width: 900px) {
   .container {
     margin: auto;
     max-width: 730px;
+    padding-top: 2em;
   }
 }
