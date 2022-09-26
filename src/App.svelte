@@ -4,10 +4,13 @@
   import InvoiceDetail from "./Routes/InvoiceDetail.svelte";
   import Home from "./Routes/Home.svelte";
   import NavBar from "./components/NavBar.svelte";
+  import ItemForm from "./Routes/ItemForm.svelte";
+  import AddItem from "./components/AddItem.svelte";
 
   let routes = {
     "/": Home,
     "/Invoice/:id": InvoiceDetail,
+    "/items": ItemForm,
   };
 </script>
 
