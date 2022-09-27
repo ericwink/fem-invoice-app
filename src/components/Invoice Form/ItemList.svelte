@@ -1,5 +1,7 @@
 <script>
-  import AddItem from "../components/AddItem.svelte";
+  import AddItem from "./AddItem.svelte";
+  import ButtonAdd from "../Button-Add-Item.svelte";
+  import { theme } from "../../store";
 
   let itemList = [];
 
@@ -25,9 +27,15 @@
   }
 </script>
 
-<h2>Item List</h2>
+<h2 class={$theme}>Item List</h2>
 {#each itemList as item, index}
   <AddItem {item} {index} {removeItems} />
 {/each}
 
-<button on:click={addToItems}>+ Add New Item</button>
+<ButtonAdd {addToItems} />
+
+<style>
+  h2.dark {
+    color: var(--clr-neutral-300);
+  }
+</style>

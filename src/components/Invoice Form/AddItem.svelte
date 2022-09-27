@@ -2,7 +2,7 @@
   export let item;
   export let index;
   export let removeItems;
-  import { theme } from "../store";
+  import { theme } from "../../store";
 </script>
 
 <form class={$theme} on:submit={e => e.preventDefault()}>
@@ -31,16 +31,20 @@
 </form>
 
 <style>
+  /* mobile and basics */
   form {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     align-items: center;
-    gap: 1em;
+    gap: 0.8em;
+    margin-bottom: 2em;
   }
   input {
     border: 1px solid transparent;
     border-radius: 5px;
     padding: 0.5em;
+    max-height: 45px;
+    width: 100%;
   }
   .dark label {
     color: var(--clr-neutral-300);
@@ -60,7 +64,7 @@
     border: none;
     width: fit-content;
     height: fit-content;
-    justify-self: center;
+    justify-self: flex-end;
     margin-top: 2em;
   }
   @media (hover: hover) {
@@ -76,24 +80,23 @@
     grid-column: 1/5;
   }
   .qty input {
-    max-width: 50px;
     padding: 0.8em 10px;
   }
   .price input {
-    max-width: 100px;
     padding: 0.8em 10px;
   }
   .total input {
     background: none;
     border: none;
     max-width: 70px;
-    padding: 0.8em 0;
+    padding: 0.8em 10px;
   }
 
   /* tablet style 600px */
   @media (min-width: 600px) {
     form {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: 2fr 0.5fr 1fr 1fr 0.5fr;
+      gap: 10px;
     }
     .name {
       grid-column: 1/2;
@@ -102,7 +105,7 @@
       justify-self: center;
     }
     button {
-      justify-self: flex-start;
+      justify-self: flex-end;
     }
   }
 </style>

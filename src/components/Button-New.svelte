@@ -1,11 +1,11 @@
-<button class="btn new-invoice"><img src="/icon-plus.svg" alt="plus sign" /> New<span> Invoice</span></button>
+<a href="/#/newinvoice"><img src="/icon-plus.svg" alt="plus sign" /> New<span> Invoice</span></a>
 
 <style>
-  button {
+  a {
     background-color: var(--clr-full-purple);
     display: flex;
     align-items: center;
-    gap: 0.8em;
+    gap: 0.5em;
     padding: 0.8em;
     border-radius: 25px;
     color: var(--clr-neutral-100);
@@ -23,7 +23,7 @@
   }
 
   @media (hover: hover) {
-    button:hover {
+    a:hover {
       cursor: pointer;
       background-color: var(--clr-pale-purple);
     }
