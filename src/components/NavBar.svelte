@@ -80,11 +80,11 @@
     }
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: 950px) {
     nav {
       position: absolute;
       left: 0;
-      width: 100px;
+      width: 80px;
       height: 100%;
       grid-template-columns: 1fr;
       grid-template-rows: 2fr 0.3fr 0.3fr;

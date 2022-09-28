@@ -73,17 +73,21 @@
       opacity: 50%;
       position: absolute;
       z-index: 0;
-      top: 0;
+      top: 72px;
       left: 0;
     }
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: 950px) {
     #invoice-form {
       position: absolute;
       left: 100px;
       top: 0;
       z-index: 1;
+    }
+
+    .background {
+      top: 0;
     }
   }
 </style>

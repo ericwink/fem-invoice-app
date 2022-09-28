@@ -212,7 +212,7 @@
   }
 
   /* desktop */
-  @media (min-width: 900px) {
+  @media (min-width: 950px) {
     #invoice-form {
       padding: 0.5em 2em;
       width: 60vw;
