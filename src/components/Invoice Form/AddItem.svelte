@@ -3,25 +3,31 @@
   export let index;
   export let removeItems;
   import { theme } from "../../store";
+
+  $: innerWidth = 0;
 </script>
+
+<!-- svelte binding to ensure live update of window.innerWidth -->
+<!-- utilized to determine when to display item headings -->
+<svelte:window bind:innerWidth />
 
 <form class={$theme} on:submit={e => e.preventDefault()}>
   <div class="name">
-    <label for="name">Item name</label>
+    {#if (index === 0 && innerWidth > 600) || innerWidth <= 600}<label for="name">Item name</label>{/if}
     <input type="text" name="name" bind:value={item.name} />
   </div>
 
   <div class="qty">
-    <label for="qty">Qty</label>
+    {#if (index === 0 && innerWidth > 600) || innerWidth <= 600}<label for="qty">Qty</label>{/if}
     <input type="text" name="qty" bind:value={item.qty} />
   </div>
 
   <div class="price">
-    <label for="price">Price </label>
+    {#if (index === 0 && innerWidth > 600) || innerWidth <= 600}<label for="price">Price </label>{/if}
     <input type="text" name="price" bind:value={item.price} />
   </div>
   <div class="total">
-    <label for="total">Total </label>
+    {#if (index === 0 && innerWidth > 600) || innerWidth <= 600}<label for="total">Total </label>{/if}
     <input type="text" name="total" bind:value={item.total} disabled />
   </div>
 

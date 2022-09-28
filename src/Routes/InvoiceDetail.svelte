@@ -6,6 +6,7 @@
   import ButtonEdit from "../components/Button-Edit.svelte";
   import ButtonDelete from "../components/Button-Delete.svelte";
   import ButtonPaid from "../components/Button-Paid.svelte";
+  import ButtonGoBack from "../components/Button-GoBack.svelte";
   export let params = {};
   const invoiceID = params.id;
 
@@ -14,10 +15,11 @@
 
 <article id="invoice-detail">
   <header>
-    <button on:click={() => pop()} class={$theme}>
-      <img src="/icon-arrow-left.svg" alt="left arrow" />
-      Go back
-    </button>
+    <ButtonGoBack
+      click={() => {
+        pop();
+      }}
+    />
   </header>
   <section class={`status background ${$theme}`}>
     <p>Status</p>
@@ -103,19 +105,7 @@
     color: var(--clr-neutral-700);
   }
 
-  #invoice-detail header button.dark {
-    color: var(--clr-neutral-100);
-  }
-
   /* Styles */
-
-  #invoice-detail header button {
-    background: none;
-    border: none;
-    display: flex;
-    gap: 20px;
-    padding: 0 0 2em;
-  }
 
   #invoice-detail .status {
     display: flex;
@@ -264,12 +254,6 @@
     align-items: center;
     justify-content: center;
     padding: 2em;
-  }
-
-  @media (hover: hover) {
-    #invoice-detail header button {
-      cursor: pointer;
-    }
   }
 
   /* --- tablet style --- */

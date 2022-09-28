@@ -1,97 +1,109 @@
 <script>
   import ItemList from "./ItemList.svelte";
   import { theme } from "../../store";
+  import ButtonGoBack from "../Button-GoBack.svelte";
+
+  export let openForm;
 </script>
 
-<h1 class={$theme}>New Invoice</h1>
+<section id="invoice-form" class={$theme}>
+  <ButtonGoBack click={openForm} />
 
-<h2>Bill From</h2>
+  <h1 class={$theme}>New Invoice</h1>
 
-<form action="" class={$theme}>
-  <div class="bf-street-address">
-    <label for="bf-street-address">Street Address </label>
-    <input type="text" name="bf-street-address" id="street-address" />
-  </div>
+  <h2>Bill From</h2>
 
-  <div class="bf-city">
-    <label for="bf-city">City </label>
-    <input type="text" name="bf-city" id="bf-city" />
-  </div>
+  <form action="" class={$theme}>
+    <div class="bf-street-address">
+      <label for="bf-street-address">Street Address </label>
+      <input type="text" name="bf-street-address" id="street-address" />
+    </div>
 
-  <div class="bf-post-code">
-    <label for="bf-post-code">Post Code </label>
-    <input type="text" name="bf-post-code" id="bf-post-code" />
-  </div>
+    <div class="bf-city">
+      <label for="bf-city">City </label>
+      <input type="text" name="bf-city" id="bf-city" />
+    </div>
 
-  <div class="bf-country">
-    <label for="bf-country">Country </label>
-    <input type="text" name="bf-country" id="bf-country" />
-  </div>
-</form>
+    <div class="bf-post-code">
+      <label for="bf-post-code">Post Code </label>
+      <input type="text" name="bf-post-code" id="bf-post-code" />
+    </div>
 
-<h2>Bill To</h2>
+    <div class="bf-country">
+      <label for="bf-country">Country </label>
+      <input type="text" name="bf-country" id="bf-country" />
+    </div>
+  </form>
 
-<form action="" class={$theme}>
-  <div class="bt-client-name">
-    <label for="bt-client-name">Client's Name </label>
-    <input type="text" name="bt-client-name" id="bt-client-name" />
-  </div>
+  <h2>Bill To</h2>
 
-  <div class="bt-client-email">
-    <label for="bt-client-email">Client's Email </label>
-    <input type="text" name="bt-client-email" id="bt-client-email" />
-  </div>
+  <form action="" class={$theme}>
+    <div class="bt-client-name">
+      <label for="bt-client-name">Client's Name </label>
+      <input type="text" name="bt-client-name" id="bt-client-name" />
+    </div>
 
-  <div class="bt-street-address">
-    <label for="bt-street-address">Street Address </label>
-    <input type="text" name="bt-street-address" id="street-address" />
-  </div>
+    <div class="bt-client-email">
+      <label for="bt-client-email">Client's Email </label>
+      <input type="text" name="bt-client-email" id="bt-client-email" />
+    </div>
 
-  <div class="bt-city">
-    <label for="bt-city">City </label>
-    <input type="text" name="bt-city" id="bt-city" />
-  </div>
+    <div class="bt-street-address">
+      <label for="bt-street-address">Street Address </label>
+      <input type="text" name="bt-street-address" id="street-address" />
+    </div>
 
-  <div class="bt-post-code">
-    <label for="bt-post-code">Post Code </label>
-    <input type="text" name="bt-post-code" id="bt-post-code" />
-  </div>
+    <div class="bt-city">
+      <label for="bt-city">City </label>
+      <input type="text" name="bt-city" id="bt-city" />
+    </div>
 
-  <div class="bt-country">
-    <label for="bt-country">Country </label>
-    <input type="text" name="bt-country" id="bt-country" />
-  </div>
-</form>
+    <div class="bt-post-code">
+      <label for="bt-post-code">Post Code </label>
+      <input type="text" name="bt-post-code" id="bt-post-code" />
+    </div>
 
-<form action="" class={`${$theme} alternate`}>
-  <div class="invoice-date">
-    <label for="invoice-date">Invoice Date </label>
-    <input type="date" name="invoice-date" id="invoice-date" />
-  </div>
+    <div class="bt-country">
+      <label for="bt-country">Country </label>
+      <input type="text" name="bt-country" id="bt-country" />
+    </div>
+  </form>
 
-  <div class="payment-terms">
-    <label for="payment-terms">Payment Terms</label>
-    <select name="payment-terms" id="payment-terms">
-      <option value="Net 30 Days">Net 30 Days</option>
-      <option value="Net 45 Days">Net 45 Days</option>
-      <option value="Net 60 Days">Net 60 Days</option>
-      <option value="Net 90 Days">Net 90 Days</option>
-    </select>
-  </div>
+  <form action="" class={`${$theme} alternate`}>
+    <div class="invoice-date">
+      <label for="invoice-date">Invoice Date </label>
+      <input type="date" name="invoice-date" id="invoice-date" />
+    </div>
 
-  <div class="project-description">
-    <label for="project-description">Project Description </label>
-    <input type="text" />
-  </div>
-</form>
+    <div class="payment-terms">
+      <label for="payment-terms">Payment Terms</label>
+      <select name="payment-terms" id="payment-terms">
+        <option value="Net 30 Days">Net 30 Days</option>
+        <option value="Net 45 Days">Net 45 Days</option>
+        <option value="Net 60 Days">Net 60 Days</option>
+        <option value="Net 90 Days">Net 90 Days</option>
+      </select>
+    </div>
 
-<ItemList />
+    <div class="project-description">
+      <label for="project-description">Project Description </label>
+      <input type="text" />
+    </div>
+  </form>
+
+  <ItemList />
+</section>
 
 <style>
   /* dark & light theme colors */
-  .invoice-form.dark {
-    background-color: var(--clr-neutral-500);
+
+  #invoice-form.dark {
+    background-color: var(--clr-neutral-600);
   }
+  #invoice-form.light {
+    background-color: var(--clr-neutral-100);
+  }
+
   .dark label {
     color: var(--clr-neutral-300);
   }
@@ -104,13 +116,20 @@
   .light select {
     background-color: var(--clr-neutral-100);
     color: var(--clr-neutral-900);
-    border: 1px solid var(--clr-neutral-300);
+    border: 1px solid var(--clr-pale-blue);
   }
   h1.dark {
     color: var(--clr-neutral-100);
   }
 
   /* mobile and basics */
+
+  #invoice-form {
+    padding: 1em 1em;
+    width: 100vw;
+    overflow-y: auto;
+    height: calc(100vh - 72px);
+  }
 
   div {
     display: flex;
@@ -157,6 +176,10 @@
 
   /* tablet style @ 600px */
   @media (min-width: 600px) {
+    #invoice-form {
+      width: 80vw;
+    }
+
     form {
       grid-template-columns: 1fr 1fr 1fr;
     }
@@ -185,6 +208,15 @@
     }
     .payment-terms {
       grid-column: 2/3;
+    }
+  }
+
+  /* desktop */
+  @media (min-width: 900px) {
+    #invoice-form {
+      padding: 0.5em 2em;
+      width: 60vw;
+      height: 100vh;
     }
   }
 </style>

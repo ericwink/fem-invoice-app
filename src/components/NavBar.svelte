@@ -88,6 +88,7 @@
       height: 100%;
       grid-template-columns: 1fr;
       grid-template-rows: 2fr 0.3fr 0.3fr;
+      z-index: 9999;
     }
     .logo-box-dark-purple {
       width: 100%;
