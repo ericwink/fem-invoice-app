@@ -3,7 +3,22 @@
   import ButtonInvoice from "../components/Invoice Form/Button-Invoice.svelte";
   import InvoicePreview from "../components/InvoicePreview.svelte";
   import { theme } from "../store";
+  import InvoiceForm from "../components/Invoice Form/InvoiceForm.svelte";
+  import Background from "../components/Invoice Form/Background.svelte";
+
   let invoiceCount = data.length;
+
+  let visible = false;
+  const openForm = () => {
+    visible = !visible;
+    if (document.body.style.overflowY != "hidden") {
+      document.body.style.overflowY = "hidden";
+    } else {
+      setTimeout(() => {
+        document.body.style.overflowY = "auto";
+      }, 600);
+    }
+  };
 </script>
 
 <header id="home" class={$theme}>
@@ -15,7 +30,7 @@
     <h3>Filter</h3>
     <img src="/icon-arrow-down.svg" alt="down arrow" />
   </div>
-  <ButtonInvoice style={"new"} />
+  <ButtonInvoice style={"new"} {openForm} />
 </header>
 
 <ul>
@@ -23,6 +38,12 @@
     <InvoicePreview {invoice} />
   {/each}
 </ul>
+
+<!-- clicking above button runs function that reveals invoice -->
+{#if visible}
+  <InvoiceForm {openForm} />
+  <Background />
+{/if}
 
 <style>
   header {

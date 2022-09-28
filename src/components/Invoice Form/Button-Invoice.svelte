@@ -1,32 +1,14 @@
 <script>
-  import InvoiceForm from "./InvoiceForm.svelte";
   import { theme } from "../../store";
+  export let openForm;
 
   export let style;
-
-  let visible = false;
-  const openForm = () => {
-    visible = !visible;
-    if (document.body.style.overflowY !== "hidden") {
-      document.body.style.overflowY = "hidden";
-    } else {
-      setTimeout(() => {
-        document.body.style.overflowY = "";
-      }, 600);
-    }
-  };
 </script>
 
 {#if style === "new"}
   <button on:click={openForm} class="new"><img src="/icon-plus.svg" alt="plus sign" /> New<span> Invoice</span></button>
 {:else}
   <button on:click={openForm} class={`btn edit-btn ${$theme}`}>Edit</button>
-{/if}
-
-<!-- clicking above button runs function that reveals invoice -->
-{#if visible}
-  <InvoiceForm {openForm} />
-  <div class="background" />
 {/if}
 
 <style>
@@ -83,24 +65,6 @@
   @media (min-width: 600px) {
     span {
       display: block;
-    }
-    .background {
-      width: 100vw;
-      /* height is full height of viewport minus the navbar */
-      height: calc(100vh - 72px);
-      background-color: black;
-      opacity: 50%;
-      position: absolute;
-      z-index: 0;
-      top: 72px;
-      left: 0;
-    }
-  }
-
-  @media (min-width: 950px) {
-    .background {
-      top: 0;
-      height: 100%;
     }
   }
 </style>

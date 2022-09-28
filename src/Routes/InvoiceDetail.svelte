@@ -7,11 +7,31 @@
   import ButtonDelete from "../components/Button-Delete.svelte";
   import ButtonPaid from "../components/Button-Paid.svelte";
   import ButtonGoBack from "../components/Button-GoBack.svelte";
+  import InvoiceForm from "../components/Invoice Form/InvoiceForm.svelte";
+  import Background from "../components/Invoice Form/Background.svelte";
   export let params = {};
   const invoiceID = params.id;
 
   const result = data.filter(invoice => invoice.id === invoiceID);
+
+  let visible = false;
+  const openForm = () => {
+    visible = !visible;
+    if (document.body.style.overflowY != "hidden") {
+      document.body.style.overflowY = "hidden";
+    } else {
+      setTimeout(() => {
+        document.body.style.overflowY = "";
+      }, 600);
+    }
+  };
 </script>
+
+<!-- clicking above button runs function that reveals invoice -->
+{#if visible}
+  <InvoiceForm {openForm} />
+  <Background />
+{/if}
 
 <article id="invoice-detail">
   <header>
@@ -25,7 +45,7 @@
     <p>Status</p>
     <Status status={result[0].status} />
     <div class="action-buttons">
-      <ButtonInvoice style={"edit"} />
+      <ButtonInvoice style={"edit"} {openForm} />
       <ButtonDelete />
       <ButtonPaid />
     </div>
@@ -88,7 +108,7 @@
   </section>
 
   <footer class={`background ${$theme}`}>
-    <ButtonInvoice style={"edit"} />
+    <ButtonInvoice style={"edit"} {openForm} />
     <ButtonDelete />
     <ButtonPaid />
   </footer>
