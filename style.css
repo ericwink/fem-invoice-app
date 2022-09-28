@@ -178,7 +178,7 @@ p.smaller {
 }
 
 /* ---- basic styles --- */
-button.btn {
+.btn {
   background: none;
   border: none;
   border-radius: 20px;

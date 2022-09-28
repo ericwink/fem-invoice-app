@@ -3,7 +3,7 @@
   import data from "../assets/data.json";
   import { theme } from "../store.js";
   import Status from "../components/Status.svelte";
-  import ButtonEdit from "../components/Button-Edit.svelte";
+  import ButtonInvoice from "../components/Invoice Form/Button-Invoice.svelte";
   import ButtonDelete from "../components/Button-Delete.svelte";
   import ButtonPaid from "../components/Button-Paid.svelte";
   import ButtonGoBack from "../components/Button-GoBack.svelte";
@@ -25,7 +25,7 @@
     <p>Status</p>
     <Status status={result[0].status} />
     <div class="action-buttons">
-      <ButtonEdit />
+      <ButtonInvoice style={"edit"} />
       <ButtonDelete />
       <ButtonPaid />
     </div>
@@ -88,7 +88,7 @@
   </section>
 
   <footer class={`background ${$theme}`}>
-    <ButtonEdit />
+    <ButtonInvoice style={"edit"} />
     <ButtonDelete />
     <ButtonPaid />
   </footer>
@@ -115,10 +115,6 @@
     padding: 1.5em;
     border-radius: 10px;
     margin-bottom: 1em;
-  }
-
-  #invoice-detail .action-buttons {
-    display: none;
   }
 
   #invoice-detail .details {
@@ -242,6 +238,10 @@
 
   #invoice-detail .total-amount {
     font-size: var(--fs-500);
+  }
+
+  #invoice-detail .action-buttons {
+    display: none;
   }
 
   #invoice-detail footer {

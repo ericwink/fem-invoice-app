@@ -1,7 +1,8 @@
 <script>
-  import { fly } from "svelte/transition";
+  import InvoiceForm from "./InvoiceForm.svelte";
+  import { theme } from "../../store";
 
-  import InvoiceForm from "./Invoice Form/InvoiceForm.svelte";
+  export let style;
 
   let visible = false;
   const openForm = () => {
@@ -16,24 +17,20 @@
   };
 </script>
 
-<button on:click={openForm}><img src="/icon-plus.svg" alt="plus sign" /> New<span> Invoice</span></button>
+{#if style === "new"}
+  <button on:click={openForm} class="new"><img src="/icon-plus.svg" alt="plus sign" /> New<span> Invoice</span></button>
+{:else}
+  <button on:click={openForm} class={`btn edit-btn ${$theme}`}>Edit</button>
+{/if}
 
+<!-- clicking above button runs function that reveals invoice -->
 {#if visible}
-  <div id="invoice-form" transition:fly={{ duration: 600, x: -100 }}>
-    <InvoiceForm {openForm} />
-  </div>
+  <InvoiceForm {openForm} />
   <div class="background" />
 {/if}
 
 <style>
-  #invoice-form {
-    position: absolute;
-    left: 0;
-    top: 4.5em;
-    z-index: 1;
-  }
-
-  button {
+  .new {
     background-color: var(--clr-full-purple);
     display: flex;
     align-items: center;
@@ -56,9 +53,30 @@
   }
 
   @media (hover: hover) {
-    button:hover {
+    .new:hover {
       cursor: pointer;
       background-color: var(--clr-pale-purple);
+    }
+  }
+
+  .edit-btn.dark {
+    background-color: var(--clr-neutral-400);
+    color: var(--clr-neutral-100);
+  }
+  .edit-btn.light {
+    background-color: var(--clr-neutral-300);
+    color: var(--clr-neutral-100);
+  }
+  @media (hover: hover) {
+    .edit-btn.dark:hover {
+      cursor: pointer;
+      background-color: var(--clr-neutral-100);
+      color: var(--clr-neutral-300);
+    }
+    .edit-btn.light:hover {
+      cursor: pointer;
+      background-color: var(--clr-neutral-200);
+      color: var(--clr-neutral-300);
     }
   }
 
@@ -68,7 +86,8 @@
     }
     .background {
       width: 100vw;
-      height: 100vh;
+      /* height is full height of viewport minus the navbar */
+      height: calc(100vh - 72px);
       background-color: black;
       opacity: 50%;
       position: absolute;
@@ -79,15 +98,9 @@
   }
 
   @media (min-width: 950px) {
-    #invoice-form {
-      position: absolute;
-      left: 100px;
-      top: 0;
-      z-index: 1;
-    }
-
     .background {
       top: 0;
+      height: 100%;
     }
   }
 </style>

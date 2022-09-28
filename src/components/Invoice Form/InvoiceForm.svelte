@@ -3,10 +3,12 @@
   import { theme } from "../../store";
   import ButtonGoBack from "../Button-GoBack.svelte";
 
+  import { fly } from "svelte/transition";
+
   export let openForm;
 </script>
 
-<section id="invoice-form" class={$theme}>
+<section id="invoice-form" transition:fly={{ duration: 600, x: -100 }} class={$theme}>
   <ButtonGoBack click={openForm} />
 
   <h1 class={$theme}>New Invoice</h1>
@@ -128,7 +130,12 @@
     padding: 1em 1em;
     width: 100vw;
     overflow-y: auto;
+    /* height is full height of viewport minus the navbar */
     height: calc(100vh - 72px);
+    position: absolute;
+    left: 0;
+    top: 4.5em;
+    z-index: 1;
   }
 
   div {
@@ -214,9 +221,12 @@
   /* desktop */
   @media (min-width: 950px) {
     #invoice-form {
-      padding: 0.5em 2em;
+      padding: 1em 2em;
       width: 60vw;
       height: 100vh;
+      left: 80px;
+      top: 0;
+      z-index: 1;
     }
   }
 </style>

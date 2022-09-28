@@ -1,8 +1,7 @@
 <script>
   import data from "../assets/data.json";
-  import ButtonNew from "../components/Button-New.svelte";
+  import ButtonInvoice from "../components/Invoice Form/Button-Invoice.svelte";
   import InvoicePreview from "../components/InvoicePreview.svelte";
-  import InvoiceForm from "../components/Invoice Form/InvoiceForm.svelte";
   import { theme } from "../store";
   let invoiceCount = data.length;
 </script>
@@ -16,7 +15,7 @@
     <h3>Filter</h3>
     <img src="/icon-arrow-down.svg" alt="down arrow" />
   </div>
-  <ButtonNew />
+  <ButtonInvoice style={"new"} />
 </header>
 
 <ul>
