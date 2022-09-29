@@ -16,6 +16,7 @@
 
   let visible = false;
   const openForm = () => {
+    window.scroll({ top: 0, behavior: "smooth" });
     visible = !visible;
     if (document.body.style.overflowY != "hidden") {
       document.body.style.overflowY = "hidden";
@@ -29,7 +30,7 @@
 
 <!-- clicking above button runs function that reveals invoice -->
 {#if visible}
-  <InvoiceForm {openForm} />
+  <InvoiceForm {openForm} invoice={result[0]} />
   <Background />
 {/if}
 

@@ -3,7 +3,15 @@
   import ButtonAdd from "../Button-Add-Item.svelte";
   import { theme } from "../../store";
 
+  export let invoice;
+
   let itemList = [];
+
+  if (invoice) {
+    itemList = invoice.items;
+  }
+
+  console.log(itemList);
 
   function addToItems() {
     itemList = [...itemList, new Item("New Item")];
@@ -19,10 +27,10 @@
     constructor(name) {
       this.name = name;
       this.price = 0;
-      this.qty = 0;
+      this.quantity = 0;
     }
     get total() {
-      return this.qty * this.price;
+      return this.quantity * this.price;
     }
   }
 </script>

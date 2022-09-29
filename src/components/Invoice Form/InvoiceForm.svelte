@@ -5,6 +5,7 @@
 
   import { fly } from "svelte/transition";
 
+  export let invoice;
   export let openForm;
 </script>
 
@@ -18,22 +19,22 @@
   <form action="" class={$theme}>
     <div class="bf-street-address">
       <label for="bf-street-address">Street Address </label>
-      <input type="text" name="bf-street-address" id="street-address" />
+      <input type="text" name="bf-street-address" id="street-address" value={invoice ? invoice.senderAddress.street : null} />
     </div>
 
     <div class="bf-city">
       <label for="bf-city">City </label>
-      <input type="text" name="bf-city" id="bf-city" />
+      <input type="text" name="bf-city" id="bf-city" value={invoice ? invoice.senderAddress.city : null} />
     </div>
 
     <div class="bf-post-code">
       <label for="bf-post-code">Post Code </label>
-      <input type="text" name="bf-post-code" id="bf-post-code" />
+      <input type="text" name="bf-post-code" id="bf-post-code" value={invoice ? invoice.senderAddress.postCode : null} />
     </div>
 
     <div class="bf-country">
       <label for="bf-country">Country </label>
-      <input type="text" name="bf-country" id="bf-country" />
+      <input type="text" name="bf-country" id="bf-country" value={invoice ? invoice.senderAddress.country : null} />
     </div>
   </form>
 
@@ -42,58 +43,58 @@
   <form action="" class={$theme}>
     <div class="bt-client-name">
       <label for="bt-client-name">Client's Name </label>
-      <input type="text" name="bt-client-name" id="bt-client-name" />
+      <input type="text" name="bt-client-name" id="bt-client-name" value={invoice ? invoice.clientName : null} />
     </div>
 
     <div class="bt-client-email">
       <label for="bt-client-email">Client's Email </label>
-      <input type="text" name="bt-client-email" id="bt-client-email" />
+      <input type="text" name="bt-client-email" id="bt-client-email" value={invoice ? invoice.clientEmail : null} />
     </div>
 
     <div class="bt-street-address">
       <label for="bt-street-address">Street Address </label>
-      <input type="text" name="bt-street-address" id="street-address" />
+      <input type="text" name="bt-street-address" id="street-address" value={invoice ? invoice.clientAddress.street : null} />
     </div>
 
     <div class="bt-city">
       <label for="bt-city">City </label>
-      <input type="text" name="bt-city" id="bt-city" />
+      <input type="text" name="bt-city" id="bt-city" value={invoice ? invoice.clientAddress.city : null} />
     </div>
 
     <div class="bt-post-code">
       <label for="bt-post-code">Post Code </label>
-      <input type="text" name="bt-post-code" id="bt-post-code" />
+      <input type="text" name="bt-post-code" id="bt-post-code" value={invoice ? invoice.clientAddress.postCode : null} />
     </div>
 
     <div class="bt-country">
       <label for="bt-country">Country </label>
-      <input type="text" name="bt-country" id="bt-country" />
+      <input type="text" name="bt-country" id="bt-country" value={invoice ? invoice.clientAddress.country : null} />
     </div>
   </form>
 
   <form action="" class={`${$theme} alternate`}>
     <div class="invoice-date">
       <label for="invoice-date">Invoice Date </label>
-      <input type="date" name="invoice-date" id="invoice-date" />
+      <input type="date" name="invoice-date" id="invoice-date" value={invoice ? invoice.createdAt : null} />
     </div>
 
     <div class="payment-terms">
       <label for="payment-terms">Payment Terms</label>
       <select name="payment-terms" id="payment-terms">
-        <option value="Net 30 Days">Net 30 Days</option>
-        <option value="Net 45 Days">Net 45 Days</option>
-        <option value="Net 60 Days">Net 60 Days</option>
-        <option value="Net 90 Days">Net 90 Days</option>
+        <option value="Net 30 Days" selected={invoice ? (invoice.paymentTerms === 30 ? true : null) : null}>Net 30 Days</option>
+        <option value="Net 45 Days" selected={invoice ? (invoice.paymentTerms === 45 ? true : null) : null}>Net 45 Days</option>
+        <option value="Net 60 Days" selected={invoice ? (invoice.paymentTerms === 60 ? true : null) : null}>Net 60 Days</option>
+        <option value="Net 90 Days" selected={invoice ? (invoice.paymentTerms === 90 ? true : null) : null}>Net 90 Days</option>
       </select>
     </div>
 
     <div class="project-description">
       <label for="project-description">Project Description </label>
-      <input type="text" />
+      <input type="text" value={invoice ? invoice.description : null} />
     </div>
   </form>
 
-  <ItemList />
+  <ItemList {invoice} />
 </section>
 
 <style>

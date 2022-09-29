@@ -17,9 +17,9 @@
     <input type="text" name="name" bind:value={item.name} />
   </div>
 
-  <div class="qty">
-    {#if (index === 0 && innerWidth > 600) || innerWidth <= 600}<label for="qty">Qty</label>{/if}
-    <input type="text" name="qty" bind:value={item.qty} />
+  <div class="quantity">
+    {#if (index === 0 && innerWidth > 600) || innerWidth <= 600}<label for="quantity">quantity</label>{/if}
+    <input type="text" name="quantity" bind:value={item.quantity} />
   </div>
 
   <div class="price">
@@ -85,7 +85,7 @@
   .name {
     grid-column: 1/5;
   }
-  .qty input {
+  .quantity input {
     padding: 0.8em 10px;
   }
   .price input {
@@ -94,7 +94,7 @@
   .total input {
     background: none;
     border: none;
-    max-width: 70px;
+    max-width: 90px;
     padding: 0.8em 10px;
   }
 
@@ -107,7 +107,7 @@
     .name {
       grid-column: 1/2;
     }
-    .qty {
+    .quantity {
       justify-self: center;
     }
     button {
