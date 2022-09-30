@@ -1,6 +1,6 @@
 <script>
   export let addToItems;
-  import { theme } from "../store";
+  import { theme } from "../../store";
 </script>
 
 <button class={$theme} on:click={addToItems}>+ Add New Item</button>

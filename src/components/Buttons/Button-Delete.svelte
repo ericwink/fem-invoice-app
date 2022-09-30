@@ -1,4 +1,8 @@
-<button class="btn delete-btn">Delete</button>
+<script>
+  export let toggleModal;
+</script>
+
+<button on:click={toggleModal} class="btn delete-btn">Delete</button>
 
 <style>
   button.delete-btn {

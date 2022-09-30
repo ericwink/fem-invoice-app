@@ -1,6 +1,6 @@
 <script>
   import AddItem from "./AddItem.svelte";
-  import ButtonAdd from "../Button-Add-Item.svelte";
+  import ButtonAdd from "../Buttons/Button-Add-Item.svelte";
   import { theme } from "../../store";
 
   export let invoice;

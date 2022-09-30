@@ -4,16 +4,23 @@
   import { theme } from "../store.js";
   import Status from "../components/Status.svelte";
   import ButtonInvoice from "../components/Invoice Form/Button-Invoice.svelte";
-  import ButtonDelete from "../components/Button-Delete.svelte";
-  import ButtonPaid from "../components/Button-Paid.svelte";
-  import ButtonGoBack from "../components/Button-GoBack.svelte";
+  import ButtonDelete from "../components/Buttons/Button-Delete.svelte";
+  import ButtonPaid from "../components/Buttons/Button-Paid.svelte";
+  import ButtonGoBack from "../components/Buttons/Button-GoBack.svelte";
   import InvoiceForm from "../components/Invoice Form/InvoiceForm.svelte";
   import Background from "../components/Invoice Form/Background.svelte";
+  import ConfirmDelete from "../components/ConfirmDelete.svelte";
   export let params = {};
   const invoiceID = params.id;
 
   const result = data.filter(invoice => invoice.id === invoiceID);
 
+  let showModal = false;
+  const toggleModal = () => {
+    showModal = !showModal;
+  };
+
+  //variable and function to display invoice form
   let visible = false;
   const openForm = () => {
     window.scroll({ top: 0, behavior: "smooth" });
@@ -34,6 +41,10 @@
   <Background />
 {/if}
 
+{#if showModal}
+  <ConfirmDelete invoice={result[0]} {toggleModal} />
+{/if}
+
 <article id="invoice-detail">
   <header>
     <ButtonGoBack
@@ -47,7 +58,7 @@
     <Status status={result[0].status} />
     <div class="action-buttons">
       <ButtonInvoice style={"edit"} {openForm} />
-      <ButtonDelete />
+      <ButtonDelete {toggleModal} />
       <ButtonPaid />
     </div>
   </section>
@@ -110,7 +121,7 @@
 
   <footer class={`background ${$theme}`}>
     <ButtonInvoice style={"edit"} {openForm} />
-    <ButtonDelete />
+    <ButtonDelete {toggleModal} />
     <ButtonPaid />
   </footer>
 </article>

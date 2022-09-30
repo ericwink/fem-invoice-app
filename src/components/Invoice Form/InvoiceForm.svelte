@@ -1,9 +1,12 @@
 <script>
   import ItemList from "./ItemList.svelte";
   import { theme } from "../../store";
-  import ButtonGoBack from "../Button-GoBack.svelte";
+  import ButtonGoBack from "../Buttons/Button-GoBack.svelte";
 
   import { fly } from "svelte/transition";
+  import ButtonDiscard from "../Buttons/Button-Discard.svelte";
+  import ButtonDraft from "../Buttons/Button-Draft.svelte";
+  import ButtonSaveSend from "../Buttons/Button-Save.svelte";
 
   export let invoice;
   export let openForm;
@@ -12,7 +15,11 @@
 <section id="invoice-form" transition:fly={{ duration: 600, x: -100 }} class={$theme}>
   <ButtonGoBack click={openForm} />
 
-  <h1 class={$theme}>New Invoice</h1>
+  {#if invoice}
+    <h1 class={$theme}>Edit #{invoice.id}</h1>
+  {:else}
+    <h1 class={$theme}>New Invoice</h1>
+  {/if}
 
   <h2>Bill From</h2>
 
@@ -95,6 +102,12 @@
   </form>
 
   <ItemList {invoice} />
+
+  <footer class={$theme}>
+    <ButtonDiscard {invoice} {openForm} />
+    {#if !invoice}<ButtonDraft />{/if}
+    <ButtonSaveSend {invoice} />
+  </footer>
 </section>
 
 <style>
@@ -182,6 +195,24 @@
     grid-column: 1/3;
   }
 
+  footer {
+    margin-top: 4em;
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  footer.dark {
+    background-color: var(--clr-neutral-400);
+  }
+  footer.light {
+    box-shadow: 0px -16px 50px rgba(0, 0, 0, 0.102);
+  }
+
   /* tablet style @ 600px */
   @media (min-width: 600px) {
     #invoice-form {
@@ -217,6 +248,11 @@
     .payment-terms {
       grid-column: 2/3;
     }
+
+    footer {
+      justify-content: flex-end;
+      gap: 1em;
+    }
   }
 
   /* desktop */
@@ -228,6 +264,10 @@
       left: 80px;
       top: 0;
       z-index: 1;
+    }
+
+    footer {
+      padding: 1em 2em;
     }
   }
 </style>

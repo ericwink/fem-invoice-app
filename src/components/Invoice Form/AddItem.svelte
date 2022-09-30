@@ -74,8 +74,9 @@
     margin-top: 2em;
   }
   @media (hover: hover) {
-    button {
+    button:hover {
       cursor: pointer;
+      filter: invert(49%) sepia(35%) saturate(5178%) hue-rotate(332deg) brightness(106%) contrast(85%);
     }
   }
   div {
@@ -112,6 +113,7 @@
     }
     button {
       justify-self: flex-end;
+      margin-bottom: 1.2em;
     }
   }
 </style>

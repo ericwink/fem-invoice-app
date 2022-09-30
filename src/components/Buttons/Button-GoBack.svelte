@@ -1,5 +1,5 @@
 <script>
-  import { theme } from "../store.js";
+  import { theme } from "../../store.js";
   export let click;
 </script>
 
