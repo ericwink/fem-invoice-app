@@ -32,8 +32,12 @@
     border-radius: 10px;
   }
   article.dark {
-    background-color: var(--clr-neutral-600);
+    background-color: var(--clr-neutral-500);
     color: var(--clr-neutral-100);
+  }
+  article.light {
+    background-color: var(--clr-neutral-100);
+    color: var(--clr-neutral-400);
   }
   .buttons {
     align-self: flex-end;
@@ -45,7 +49,7 @@
   }
 
   button.cancel-btn.dark {
-    background-color: var(--clr-neutral-500);
+    background-color: var(--clr-neutral-600);
     color: var(--clr-neutral-100);
   }
   button.cancel-btn.light {

@@ -149,7 +149,7 @@
     position: absolute;
     left: 0;
     top: 4.5em;
-    z-index: 1;
+    z-index: 2;
   }
 
   div {

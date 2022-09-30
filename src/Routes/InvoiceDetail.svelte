@@ -43,6 +43,7 @@
 
 {#if showModal}
   <ConfirmDelete invoice={result[0]} {toggleModal} />
+  <Background />
 {/if}
 
 <article id="invoice-detail">
