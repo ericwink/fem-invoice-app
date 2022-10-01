@@ -1,5 +1,5 @@
 class Invoice {
-    constructor(id, createdAt, paymentDue, description, paymentTerms, clientName, clientEmail, status, senderAddress, clientAddress) {
+    constructor(id, createdAt, paymentDue, description, paymentTerms, clientName, clientEmail, status, senderAddress, clientAddress, items) {
         this.id = id;
         this.createdAt = createdAt;
         this.paymentDue = paymentDue; //need to adjust to a getter formula
@@ -10,6 +10,7 @@ class Invoice {
         this.status = status;
         this.senderAddress = senderAddress;
         this.clientAddress = clientAddress;
+        this.items = items;
     }
 }
 

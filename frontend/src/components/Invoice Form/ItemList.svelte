@@ -5,11 +5,9 @@
   import { Item } from "../../classes/invoiceClass";
 
   export let invoice;
+  export let itemList;
 
-  //declare an empty array to hold the list of items
-  let itemList = [];
-
-  //if an invoice is passed in, create an array out of the invoice items
+  // if an invoice is passed in, create an array out of the invoice items
   if (invoice) {
     itemList = invoice.items;
   }

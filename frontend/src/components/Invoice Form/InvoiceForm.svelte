@@ -13,18 +13,20 @@
   export let invoice;
   export let openForm;
 
+  //create new date and TODAY const to auto-fill blank invoice form with today's date
   const date = new Date();
   const today = date.toISOString().split("T")[0];
 
-  //make an invoice class
-  //on click,
-  //  validate all fields completed
-  //  take all values and make an invoice object
+  //declare new array to house items
+  let itemList = [];
 
+  //declare new empty elements
   let newInvoice;
   let newSenderAddress;
   let newClientAddress;
 
+  //conditional to fill in invoices
+  //we do not add itemArray here due to bindings. we pass newInvoice and itemList to the save&send button
   if (invoice) {
     newSenderAddress = new SenderAddress(invoice.senderAddress.street, invoice.senderAddress.city, invoice.senderAddress.postCode, invoice.senderAddress.country);
     newClientAddress = new ClientAddress(invoice.clientAddress.street, invoice.clientAddress.city, invoice.clientAddress.postCode, invoice.clientAddress.country);
@@ -126,12 +128,12 @@
     </div>
   </form>
 
-  <ItemList {invoice} />
+  <ItemList {invoice} bind:itemList />
 
   <footer class={$theme}>
     <ButtonDiscard {invoice} {openForm} />
     {#if !invoice}<ButtonDraft />{/if}
-    <ButtonSaveSend {newInvoice} />
+    <ButtonSaveSend {newInvoice} {itemList} />
   </footer>
 </section>
 
