@@ -60,7 +60,7 @@
     <div class="action-buttons">
       <ButtonInvoice style={"edit"} {openForm} />
       <ButtonDelete {toggleModal} />
-      <ButtonPaid />
+      <ButtonPaid invoice={result[0]} />
     </div>
   </section>
   <section class={`details background ${$theme}`}>
@@ -123,7 +123,7 @@
   <footer class={`background ${$theme}`}>
     <ButtonInvoice style={"edit"} {openForm} />
     <ButtonDelete {toggleModal} />
-    <ButtonPaid />
+    <ButtonPaid invoice={result[0]} />
   </footer>
 </article>
 

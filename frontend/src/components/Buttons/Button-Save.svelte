@@ -1,29 +1,33 @@
 <script>
-  import axios from "axios";
+  // import axios from "axios";
+  import { submitInvoice } from "../../utilities/submitInvoice";
 
   import { theme } from "../../store";
   export let newInvoice;
   export let itemList;
+  export let openForm;
 
-  async function sendInvoice() {
-    //append new invoice with the itemList array
-    newInvoice.items = itemList;
-    console.log(itemList);
-    //adjust status of invoice to 'pending' since this is the submission
-    //probably can't keep this logic here due to editing a previous invoice.... keeping for now.
-    newInvoice.status = "pending";
-    try {
-      await axios.post("http://localhost:3000/newinvoice", {
-        invoice: newInvoice,
-      });
-      console.log("invoice sent successfully!");
-    } catch (error) {
-      console.log("error");
+  //loop through each item and append item.total = item.price * item.quantity
+  function updateTotals() {
+    for (let item of itemList) {
+      item.total = item.quantity * item.price;
     }
+  }
+
+  //add the itemList array to the invoice before sending to server
+  function addItemsToInvoice() {
+    newInvoice.items = itemList;
+  }
+
+  function updateAndSend() {
+    updateTotals();
+    addItemsToInvoice();
+    submitInvoice(newInvoice, "final");
+    openForm();
   }
 </script>
 
-<button on:click={sendInvoice} class={`btn savesend-btn ${$theme}`}>Save & Send</button>
+<button on:click={updateAndSend} class={`btn savesend-btn ${$theme}`}>Save & Send</button>
 
 <style>
   button.savesend-btn.dark {

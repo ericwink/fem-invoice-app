@@ -28,7 +28,7 @@
   </div>
   <div class="total">
     {#if (index === 0 && innerWidth > 600) || innerWidth <= 600}<label for="total">Total </label>{/if}
-    <input type="text" name="total" bind:value={item.total} disabled />
+    <input type="text" name="total" bind:value={item.calcTotal} disabled />
   </div>
 
   <button on:click={() => removeItems(index)}>

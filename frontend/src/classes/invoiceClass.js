@@ -1,5 +1,5 @@
 class Invoice {
-    constructor(id, createdAt, paymentDue, description, paymentTerms, clientName, clientEmail, status, senderAddress, clientAddress, items) {
+    constructor(id, createdAt, paymentDue, description, paymentTerms, clientName, clientEmail, status, senderAddress, clientAddress, items, total) {
         this.id = id;
         this.createdAt = createdAt;
         this.paymentDue = paymentDue; //need to adjust to a getter formula
@@ -11,6 +11,7 @@ class Invoice {
         this.senderAddress = senderAddress;
         this.clientAddress = clientAddress;
         this.items = items;
+        this.total = total;
     }
 }
 
@@ -40,8 +41,9 @@ class Item {
         this.name = name;
         this.price = 0;
         this.quantity = 0;
+        this.total = 0;
     }
-    get total() {
+    get calcTotal() {
         return this.quantity * this.price;
     }
 }

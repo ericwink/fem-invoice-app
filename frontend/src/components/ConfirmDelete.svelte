@@ -1,10 +1,13 @@
 <script>
   import { theme } from "../store";
-  import { createEventDispatcher } from "svelte";
+  import { submitInvoice } from "../utilities/submitInvoice";
   export let invoice;
   export let toggleModal;
 
-  const dispatch = createEventDispatcher();
+  function confirmDelete() {
+    submitInvoice(invoice, "delete");
+    toggleModal();
+  }
 </script>
 
 <article class={$theme}>
@@ -12,7 +15,7 @@
   <p>Are you sure you want to delete invoice #{invoice.id}? This action cannot be undone</p>
   <div class="buttons">
     <button on:click={toggleModal} class={`btn cancel-btn ${$theme}`}>Cancel</button>
-    <button class={`btn delete-btn ${$theme}`}>Delete</button>
+    <button on:click={confirmDelete} class={`btn delete-btn ${$theme}`}>Delete</button>
   </div>
 </article>
 

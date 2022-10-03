@@ -34,7 +34,7 @@
   } else {
     newSenderAddress = new SenderAddress("", "", "", "");
     newClientAddress = new ClientAddress("", "", "", "");
-    newInvoice = new Invoice("testID", today, "10/30/2022", "", 30, "", "", "draft", newSenderAddress, newClientAddress);
+    newInvoice = new Invoice("tempID", today, "10/30/2022", "", 30, "", "", "draft", newSenderAddress, newClientAddress);
   }
 </script>
 
@@ -132,8 +132,8 @@
 
   <footer class={$theme}>
     <ButtonDiscard {invoice} {openForm} />
-    {#if !invoice}<ButtonDraft />{/if}
-    <ButtonSaveSend {newInvoice} {itemList} />
+    {#if !invoice}<ButtonDraft {newInvoice} {itemList} {openForm} />{/if}
+    <ButtonSaveSend {newInvoice} {itemList} {openForm} />
   </footer>
 </section>
 

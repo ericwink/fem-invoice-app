@@ -114,4 +114,10 @@
       display: inline-block;
     }
   }
+  /* desktop view */
+  @media (min-width: 950px) {
+    fieldset {
+      top: 5em;
+    }
+  }
 </style>
