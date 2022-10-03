@@ -2,8 +2,20 @@ const express = require('express')
 const app = express()
 const port = 3000;
 const cors = require('cors')
+const mongoose = require('mongoose')
 
-//send all invoice data
+const { Invoice } = require('./models/invoiceSchema.js')
+
+async function connectMongoose() {
+    try {
+        await mongoose.connect('mongodb://localhost:27017/invoiceapp')
+        console.log('Invoice Database Connected')
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+connectMongoose()
 
 //middleware
 app.use(express.json());
@@ -15,18 +27,31 @@ app.get('/', (req, res) => {
     res.send('Hello World')
 })
 
-// create new invoice
-app.post('/new', (req, res) => {
-    const invoice = req.body.invoice
-    console.log(invoice)
-    //check if draft
-    if (invoice.status === 'draft') {
-        res.send('Draft recieved')
-    }
-    else {
-        res.send('Invoice recieved')
-    }
+//retrieve and send all invoices in DB
+app.get('/invoices', async (req, res) => {
+    //pull invoices form DB
+    const results = await Invoice.find()
+    res.send(results)
+})
 
+// create new invoice
+app.post('/new', async (req, res) => {
+    const invoice = req.body.invoice
+    try {
+        //check if invoice reiceved is a draft
+        if (invoice.status === 'draft') {
+            res.send('Draft recieved')
+        }
+        //otherwise, save as a fully new invoice
+        else {
+            const newInvoice = new Invoice(invoice)
+            await newInvoice.save()
+            console.log(newInvoice)
+            res.send('Invoice recieved')
+        }
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 // edit a current invoice
