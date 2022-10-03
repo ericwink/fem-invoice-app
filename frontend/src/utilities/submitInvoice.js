@@ -40,7 +40,16 @@ async function submitInvoice(invoice, endpoint) {
             });
             alert(response.data);
             //send user back to homescreen after delete
-            window.location.replace(`http://127.0.0.1:5173/`)
+            // window.location.replace(`http://127.0.0.1:5173/`)
+        }
+        if (endpoint === 'paid') {
+            //send to delete endpoint
+            const response = await axios.post("http://localhost:3000/paid", {
+                invoice: invoice,
+            });
+            alert(response.data);
+            //send user back to homescreen after delete
+            // window.location.replace(`http://127.0.0.1:5173/`)
         }
 
     } catch (error) {

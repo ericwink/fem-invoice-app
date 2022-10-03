@@ -1,20 +1,15 @@
 <script>
   import axios from "axios";
+  import { submitInvoice } from "../../utilities/submitInvoice";
   export let invoice;
-
-  async function markPaid() {
-    try {
-      const response = await axios.post("http://localhost:3000/markpaid", {
-        invoice: invoice,
-      });
-      alert(response.data);
-    } catch (error) {
-      console.log("error");
-    }
-  }
 </script>
 
-<button on:click={markPaid} class="btn paid-btn">Mark as Paid</button>
+<button
+  on:click={() => {
+    submitInvoice(invoice, "paid");
+  }}
+  class="btn paid-btn">Mark as Paid</button
+>
 
 <style>
   button.paid-btn {
