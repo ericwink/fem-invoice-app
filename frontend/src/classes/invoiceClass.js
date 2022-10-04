@@ -1,5 +1,5 @@
 class Invoice {
-    constructor(id, createdAt, paymentDue, description, paymentTerms, clientName, clientEmail, status, senderAddress, clientAddress, items, total) {
+    constructor(id, createdAt, paymentDue, description, paymentTerms, clientName, clientEmail, status, senderAddress, clientAddress, mongoID, items, total) {
         this.id = id;
         this.createdAt = createdAt;
         this.paymentDue = paymentDue; //need to adjust to a getter formula
@@ -12,6 +12,7 @@ class Invoice {
         this.clientAddress = clientAddress;
         this.items = items;
         this.total = total;
+        this._id = mongoID
     }
 }
 
@@ -37,10 +38,10 @@ class ClientAddress extends Address {
 }
 
 class Item {
-    constructor(name) {
+    constructor(name, price, quantity) {
         this.name = name;
-        this.price = 0;
-        this.quantity = 0;
+        this.price = price;
+        this.quantity = quantity;
         this.total = 0;
     }
     get calcTotal() {

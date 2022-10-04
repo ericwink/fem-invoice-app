@@ -30,51 +30,79 @@ app.get('/', (req, res) => {
 //retrieve and send all invoices in DB
 app.get('/invoices', async (req, res) => {
     //pull invoices form DB
-    const results = await Invoice.find()
-    res.send(results)
+    try {
+        const results = await Invoice.find()
+        res.send(results)
+        console.log('invoices sent to client')
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 // create new invoice
 app.post('/new', async (req, res) => {
     const invoice = req.body.invoice
+    let editInvoice = await Invoice.findById(invoice._id)
     try {
+        if (editInvoice) {
+            await Invoice.findOneAndReplace(
+                { _id: invoice._id },
+                invoice)
+            return res.send('Invoice edited')
+        }
         //check if invoice reiceved is a draft
         if (invoice.status === 'draft') {
             res.send('Draft recieved')
         }
-        //otherwise, save as a fully new invoice
-        else {
-            const newInvoice = new Invoice(invoice)
-            await newInvoice.save()
-            console.log(newInvoice)
-            res.send('Invoice recieved')
-        }
+        //save new invoice
+        const newInvoice = new Invoice(invoice)
+        await newInvoice.save()
+        console.log(newInvoice)
+        res.send('Invoice recieved')
     } catch (error) {
         console.log(error)
     }
 })
 
 // edit a current invoice
-app.post('/edit', (req, res) => {
-    const invoice = req.body.invoice
-    const invoiceID = invoice.id
-    console.log(`${invoiceID} edited`)
-    res.send(`${invoiceID} edited`)
+app.post('/edit', async (req, res) => {
+
+    try {
+        const invoice = req.body.invoice
+        const result = await Invoice.findById(invoice._id)
+        result = invoice
+        await result.save()
+        console.log(`${invoice._id} edited`)
+        res.send(`${invoice._id} edited`)
+    } catch (error) {
+
+    }
 })
 
 // mark current invoice as 'paid'
-app.post('/paid', (req, res) => {
-    const invoice = req.body.invoice
-    const invoiceID = invoice.id
-    console.log(`${invoiceID} marked as paid`)
-    res.send(`${invoiceID} marked as paid`)
+app.post('/paid', async (req, res) => {
+    try {
+        const invoice = req.body.invoice
+        const result = await Invoice.findById(invoice._id)
+        result.status = 'paid'
+        await result.save()
+        console.log(`${invoice._id} marked as paid`)
+        res.send(`${invoice._id} marked as paid`)
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 // delete a current invoice
-app.delete('/delete', (req, res) => {
-    const invoice = req.body.invoice
-    console.log(`${invoice.id} deleted`)
-    res.send(`${invoice.id} deleted`)
+app.delete('/delete', async (req, res) => {
+    try {
+        const invoice = req.body.invoice
+        await Invoice.findByIdAndDelete(invoice._id)
+        console.log(`${invoice._id} deleted`)
+        res.send(`${invoice._id} deleted`)
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 // confirm server is active

@@ -1,7 +1,6 @@
 <script>
   import { pop } from "svelte-spa-router";
-  import data from "../assets/data.json";
-  import { theme } from "../store.js";
+  import { theme, allInvoices } from "../store.js";
   import Status from "../components/Status.svelte";
   import ButtonInvoice from "../components/Invoice Form/Button-Invoice.svelte";
   import ButtonDelete from "../components/Buttons/Button-Delete.svelte";
@@ -10,11 +9,13 @@
   import InvoiceForm from "../components/Invoice Form/InvoiceForm.svelte";
   import Background from "../components/Invoice Form/Background.svelte";
   import ConfirmDelete from "../components/ConfirmDelete.svelte";
+
   export let params = {};
-  const invoiceID = params.id;
 
-  const result = data.filter(invoice => invoice.id === invoiceID);
+  //isolate information from the store of invoices
+  let result = $allInvoices[params.id];
 
+  //variable and function to show/hide modal
   let showModal = false;
   const toggleModal = () => {
     showModal = !showModal;
@@ -37,12 +38,12 @@
 
 <!-- clicking above button runs function that reveals invoice -->
 {#if visible}
-  <InvoiceForm {openForm} invoice={result[0]} />
+  <InvoiceForm {openForm} invoice={result} />
   <Background />
 {/if}
 
 {#if showModal}
-  <ConfirmDelete invoice={result[0]} {toggleModal} />
+  <ConfirmDelete invoice={result} {toggleModal} />
   <Background />
 {/if}
 
@@ -56,43 +57,43 @@
   </header>
   <section class={`status background ${$theme}`}>
     <p>Status</p>
-    <Status status={result[0].status} />
+    <Status status={result.status} />
     <div class="action-buttons">
       <ButtonInvoice style={"edit"} {openForm} />
       <ButtonDelete {toggleModal} />
-      <ButtonPaid invoice={result[0]} />
+      <ButtonPaid invoice={result} />
     </div>
   </section>
   <section class={`details background ${$theme}`}>
     <div class="invoice-header">
-      <h3>#{result[0].id}</h3>
-      <p>{result[0].description}</p>
+      <h3>#{result.id}</h3>
+      <p>{result.description}</p>
     </div>
     <div class="address">
-      <p>{result[0].senderAddress.street}</p>
-      <p>{result[0].senderAddress.city}</p>
-      <p>{result[0].senderAddress.postCode}</p>
-      <p>{result[0].senderAddress.country}</p>
+      <p>{result.senderAddress.street}</p>
+      <p>{result.senderAddress.city}</p>
+      <p>{result.senderAddress.postCode}</p>
+      <p>{result.senderAddress.country}</p>
     </div>
     <div class="invoice-date">
       <p>Invoice Date</p>
-      <h2>{result[0].createdAt}</h2>
+      <h2>{result.createdAt}</h2>
     </div>
     <div class="payment-date">
       <p>Payment Date</p>
-      <h2>{result[0].paymentDue}</h2>
+      <h2>{result.paymentDue}</h2>
     </div>
     <div class="bill-to">
       <p>Bill To</p>
-      <h2>{result[0].clientName}</h2>
-      <p>{result[0].clientAddress.street}</p>
-      <p>{result[0].clientAddress.city}</p>
-      <p>{result[0].clientAddress.postCode}</p>
-      <p>{result[0].clientAddress.country}</p>
+      <h2>{result.clientName}</h2>
+      <p>{result.clientAddress.street}</p>
+      <p>{result.clientAddress.city}</p>
+      <p>{result.clientAddress.postCode}</p>
+      <p>{result.clientAddress.country}</p>
     </div>
     <div class="sent-to">
       <p>Sent To</p>
-      <h2>{result[0].clientEmail}</h2>
+      <h2>{result.clientEmail}</h2>
     </div>
 
     <section class={`invoice-items ${$theme}`}>
@@ -103,7 +104,7 @@
           <p class="header-item-price">Price</p>
           <p class="header-item-total">Total</p>
         </li>
-        {#each result[0].items as item}
+        {#each result.items as item}
           <li>
             <p class="item-name">{item.name}</p>
             <p class="item-qty">{item.quantity}<span>x</span></p>
@@ -116,14 +117,14 @@
 
     <section class={`total ${$theme}`}>
       <p>Amount Due</p>
-      <h2 class="total-amount">£{result[0].total.toFixed(2)}</h2>
+      <h2 class="total-amount">£{result.total.toFixed(2)}</h2>
     </section>
   </section>
 
   <footer class={`background ${$theme}`}>
     <ButtonInvoice style={"edit"} {openForm} />
     <ButtonDelete {toggleModal} />
-    <ButtonPaid invoice={result[0]} />
+    <ButtonPaid invoice={result} />
   </footer>
 </article>
 

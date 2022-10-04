@@ -1,14 +1,12 @@
 <script>
-  import data from "../assets/data.json";
+  import { theme, allInvoices } from "../store";
+  import { getInvoices } from "../utilities/getInvoices";
   import ButtonInvoice from "../components/Invoice Form/Button-Invoice.svelte";
   import InvoicePreview from "../components/InvoicePreview.svelte";
-  import { theme } from "../store";
   import InvoiceForm from "../components/Invoice Form/InvoiceForm.svelte";
   import Background from "../components/Invoice Form/Background.svelte";
   import NoResults from "../components/NoResults.svelte";
   import FilterOptions from "../components/FilterOptions.svelte";
-
-  let invoiceCount = data.length;
 
   //variable to determine display visibility of filter options box
   let filterOptionsVisible = false;
@@ -49,12 +47,21 @@
     }
   }
 
+  $: $allInvoices, updateResults();
+
   //filter array of data using the filterChoices function
   function updateResults() {
-    results = data.filter(filterChoices);
+    results = $allInvoices.filter(filterChoices);
   }
-  //call once at the time of load to populate the list
-  updateResults();
+
+  //when page loads, run getInvoices, then updateResults
+  let invoiceCount;
+  async function pageLoad() {
+    await getInvoices();
+    invoiceCount = $allInvoices.length;
+    updateResults();
+  }
+  pageLoad();
 
   //visible variable and function to control when invoice form appears
   let visible = false;
@@ -75,6 +82,17 @@
   };
 </script>
 
+<button
+  on:click={() => {
+    console.log(results);
+  }}>See Results Variable</button
+>
+<button
+  on:click={() => {
+    console.log($allInvoices);
+  }}>See Store</button
+>
+
 <header id="home" class={$theme}>
   <div class="invoice-count">
     <h1>Invoices</h1>
@@ -86,8 +104,8 @@
 </header>
 
 <ul>
-  {#each results as invoice}
-    <InvoicePreview {invoice} />
+  {#each results as invoice, index}
+    <InvoicePreview {invoice} {index} />
   {/each}
 </ul>
 

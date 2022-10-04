@@ -1,6 +1,7 @@
 <script>
   // import axios from "axios";
   import { submitInvoice } from "../../utilities/submitInvoice";
+  import { getInvoices } from "../../utilities/getInvoices";
 
   import { theme } from "../../store";
   export let newInvoice;
@@ -22,10 +23,11 @@
     newInvoice.items = itemList;
   }
 
-  function updateAndSend() {
+  async function updateAndSend() {
     updateTotals();
     addItemsToInvoice();
-    submitInvoice(newInvoice, "final");
+    await submitInvoice(newInvoice, "final");
+    getInvoices();
     openForm();
   }
 </script>

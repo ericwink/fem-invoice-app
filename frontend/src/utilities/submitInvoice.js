@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-
-
 //submit invoice to server based on submission type/endpoint
 async function submitInvoice(invoice, endpoint) {
     //evaluate type of submission

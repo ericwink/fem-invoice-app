@@ -1,14 +1,13 @@
 <script>
-  import ItemList from "./ItemList.svelte";
+  import { Invoice, SenderAddress, ClientAddress } from "../../classes/invoiceClass";
   import { theme } from "../../store";
-  import ButtonGoBack from "../Buttons/Button-GoBack.svelte";
-
   import { fly } from "svelte/transition";
+
+  import ItemList from "./ItemList.svelte";
+  import ButtonGoBack from "../Buttons/Button-GoBack.svelte";
   import ButtonDiscard from "../Buttons/Button-Discard.svelte";
   import ButtonDraft from "../Buttons/Button-Draft.svelte";
   import ButtonSaveSend from "../Buttons/Button-Save.svelte";
-
-  import { Invoice, SenderAddress, ClientAddress } from "../../classes/invoiceClass";
 
   export let invoice;
   export let openForm;
@@ -30,7 +29,7 @@
   if (invoice) {
     newSenderAddress = new SenderAddress(invoice.senderAddress.street, invoice.senderAddress.city, invoice.senderAddress.postCode, invoice.senderAddress.country);
     newClientAddress = new ClientAddress(invoice.clientAddress.street, invoice.clientAddress.city, invoice.clientAddress.postCode, invoice.clientAddress.country);
-    newInvoice = new Invoice(invoice.id, invoice.createdAt, invoice.paymentDue, invoice.description, invoice.paymentTerms, invoice.clientName, invoice.clientEmail, invoice.status, newSenderAddress, newClientAddress);
+    newInvoice = new Invoice(invoice.id, invoice.createdAt, invoice.paymentDue, invoice.description, invoice.paymentTerms, invoice.clientName, invoice.clientEmail, invoice.status, newSenderAddress, newClientAddress, invoice._id);
   } else {
     newSenderAddress = new SenderAddress("", "", "", "");
     newClientAddress = new ClientAddress("", "", "", "");
