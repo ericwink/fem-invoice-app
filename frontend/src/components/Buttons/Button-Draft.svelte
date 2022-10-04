@@ -1,6 +1,7 @@
 <script>
   import { theme } from "../../store";
   import { submitInvoice } from "../../utilities/submitInvoice";
+  import { getInvoices } from "../../utilities/getInvoices";
 
   export let newInvoice;
   export let itemList;
@@ -21,10 +22,11 @@
     newInvoice.items = itemList;
   }
 
-  function updateAndSend() {
+  async function updateAndSend() {
     updateTotals();
     addItemsToInvoice();
-    submitInvoice(newInvoice, "draft");
+    await submitInvoice(newInvoice, "draft");
+    getInvoices();
     openForm();
   }
 </script>

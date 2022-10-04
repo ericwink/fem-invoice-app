@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from "svelte";
   import { theme, allInvoices } from "../store";
   import { getInvoices } from "../utilities/getInvoices";
   import ButtonInvoice from "../components/Invoice Form/Button-Invoice.svelte";
@@ -11,28 +12,27 @@
   //variable to determine display visibility of filter options box
   let filterOptionsVisible = false;
 
-  //when user clicks the filter by status button, toggle the status of filterOptions variable
-  function toggleFilterOptions() {
-    filterOptionsVisible = !filterOptionsVisible;
-    setDirection();
-  }
-
-  //used for direction of arrow in 'filter by status' button.
-  //sets default class to blank, then on click, adjust to up or down and animate
-  let direction = "";
-  function setDirection() {
-    if (direction === "" || direction === "up") {
-      direction = "down";
-    } else {
-      direction = "up";
-    }
-  }
+  //when page loads, run getInvoices, then updateResults
+  let invoiceCount;
+  onMount(async () => {
+    await getInvoices();
+    invoiceCount = $allInvoices.length;
+    updateResults();
+  });
 
   //empty array and options for filtering displayed invoices
   let results = [];
   let paid = true;
   let pending = true;
   let draft = true;
+
+  //enables updateResults function to run any time the allInvoices store changes
+  $: $allInvoices, updateResults();
+
+  //filter array of data using the filterChoices function
+  function updateResults() {
+    results = $allInvoices.filter(filterChoices);
+  }
 
   //function to filter through each invoice, if selection matching status is true, return the invoice to filtered array
   function filterChoices(invoice) {
@@ -46,22 +46,6 @@
       return invoice;
     }
   }
-
-  $: $allInvoices, updateResults();
-
-  //filter array of data using the filterChoices function
-  function updateResults() {
-    results = $allInvoices.filter(filterChoices);
-  }
-
-  //when page loads, run getInvoices, then updateResults
-  let invoiceCount;
-  async function pageLoad() {
-    await getInvoices();
-    invoiceCount = $allInvoices.length;
-    updateResults();
-  }
-  pageLoad();
 
   //visible variable and function to control when invoice form appears
   let visible = false;
@@ -82,24 +66,13 @@
   };
 </script>
 
-<button
-  on:click={() => {
-    console.log(results);
-  }}>See Results Variable</button
->
-<button
-  on:click={() => {
-    console.log($allInvoices);
-  }}>See Store</button
->
-
 <header id="home" class={$theme}>
   <div class="invoice-count">
     <h1>Invoices</h1>
     <p>{invoiceCount} invoices</p>
   </div>
 
-  <FilterOptions {updateResults} {toggleFilterOptions} {filterOptionsVisible} bind:paid bind:pending bind:draft {direction} />
+  <FilterOptions {updateResults} {filterOptionsVisible} bind:paid bind:pending bind:draft />
   <ButtonInvoice style={"new"} {openForm} />
 </header>
 

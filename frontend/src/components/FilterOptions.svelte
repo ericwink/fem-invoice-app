@@ -2,13 +2,28 @@
   import { theme } from "../store";
   import { slide } from "svelte/transition";
 
-  export let toggleFilterOptions;
   export let filterOptionsVisible;
-  export let direction;
   export let updateResults;
   export let paid;
   export let pending;
   export let draft;
+
+  //when user clicks the filter by status button, toggle the status of filterOptions variable
+  function toggleFilterOptions() {
+    filterOptionsVisible = !filterOptionsVisible;
+    setDirection();
+  }
+
+  //used for direction of arrow in 'filter by status' button.
+  //sets default class to blank, then on click, adjust to up or down and animate
+  let direction = "";
+  function setDirection() {
+    if (direction === "" || direction === "up") {
+      direction = "down";
+    } else {
+      direction = "up";
+    }
+  }
 </script>
 
 <div class="filter">
