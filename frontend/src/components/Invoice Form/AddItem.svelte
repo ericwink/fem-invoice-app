@@ -19,12 +19,12 @@
 
   <div class="quantity">
     {#if (index === 0 && innerWidth > 600) || innerWidth <= 600}<label for="quantity">quantity</label>{/if}
-    <input type="text" name="quantity" bind:value={item.quantity} />
+    <input type="number" name="quantity" bind:value={item.quantity} />
   </div>
 
   <div class="price">
     {#if (index === 0 && innerWidth > 600) || innerWidth <= 600}<label for="price">Price </label>{/if}
-    <input type="text" name="price" bind:value={item.price} />
+    <input type="number" name="price" bind:value={item.price} />
   </div>
   <div class="total">
     {#if (index === 0 && innerWidth > 600) || innerWidth <= 600}<label for="total">Total </label>{/if}

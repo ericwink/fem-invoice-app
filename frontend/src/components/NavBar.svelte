@@ -1,9 +1,18 @@
 <script>
+  import { onMount } from "svelte";
   import { theme } from "../store";
+
+  onMount(() => {
+    const setTheme = localStorage.getItem("theme");
+    if (setTheme) {
+      theme.update(current => (current = setTheme));
+    }
+  });
 
   // toggle dark/light theme for application
   const toggleTheme = () => {
     theme.update(current => (current === "light" ? (current = "dark") : (current = "light")));
+    localStorage.setItem("theme", $theme);
   };
 </script>
 

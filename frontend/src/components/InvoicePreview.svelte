@@ -5,7 +5,7 @@
   export let invoice;
 </script>
 
-<a href={`#/invoice/${invoice._id}`} id="invoice-preview" class={$theme}>
+<a href={`#/invoice/${invoice.id}`} id="invoice-preview" class={$theme}>
   <h3><span>#</span>{invoice.id}</h3>
   <span>Due {invoice.paymentDue}</span>
   <p>{invoice.clientName}</p>

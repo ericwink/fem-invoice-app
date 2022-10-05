@@ -47,8 +47,10 @@ app.get('/invoices', async (req, res) => {
 app.get('/invoices/:id', async (req, res) => {
     //pull invoices form DB
     const invoiceID = (req.params.id)
+    console.log(invoiceID)
     try {
-        const results = await Invoice.findById(invoiceID)
+        const results = await Invoice.findOne({ id: invoiceID })
+        // const results = await Invoice.findById(invoiceID)
         res.send(results)
     } catch (error) {
         console.log(error)
@@ -64,7 +66,7 @@ app.post('/save', async (req, res) => {
             await Invoice.findOneAndReplace(
                 { _id: invoice._id },
                 invoice)
-            return res.send(`Invoice ${invoice._id} has been updated!`)
+            return res.send(`Invoice ${invoice.id} has been updated!`)
         }
         //save new invoice
         const newInvoice = new Invoice(invoice)
@@ -73,9 +75,9 @@ app.post('/save', async (req, res) => {
         await newInvoice.save()
         //check if invoice reiceved is a draft
         if (invoice.status === 'draft') {
-            res.send('Draft saved successfully!')
+            res.send(`Draft saved successfully! Invoice ID: ${newInvoice.id}`)
         } else {
-            res.send('Invoice saved successfully!')
+            res.send(`Invoice saved successfully! Invoice ID: ${newInvoice.id}`)
         }
     } catch (error) {
         console.log(error)
@@ -89,7 +91,7 @@ app.post('/paid', async (req, res) => {
         const result = await Invoice.findById(invoice._id)
         result.status = 'paid'
         await result.save()
-        res.send(`${invoice._id} has been marked as paid`)
+        res.send(`${invoice.id} has been marked as paid`)
     } catch (error) {
         console.log(error)
     }
@@ -100,7 +102,7 @@ app.delete('/delete', async (req, res) => {
     try {
         const invoice = req.body.invoice
         await Invoice.findByIdAndDelete(invoice._id)
-        res.send(`${invoice._id} has been deleted`)
+        res.send(`${invoice.id} has been deleted`)
     } catch (error) {
         console.log(error)
     }
