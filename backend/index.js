@@ -3,6 +3,7 @@ const app = express()
 const port = 3000;
 const cors = require('cors')
 const mongoose = require('mongoose')
+const data = require('./data.json')
 
 const { Invoice } = require('./models/invoiceSchema.js')
 
@@ -16,17 +17,32 @@ async function connectMongoose() {
 }
 connectMongoose()
 
+const demoInvoices = ['RT3080', 'XM9141', 'RG0314', 'RT2080', 'AA1449', 'TY9141', 'FV2353']
+
+// function addData() {
+//     for (const invoice of data) {
+//         let toSave = new Invoice(invoice)
+//         toSave.save()
+//     }
+// }
+// addData()
+
 let prefix = 'AB'
 let suffix = 1001
-
-function updateID() {
-
-}
 
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
+
+const checkDemo = function (req, res, next) {
+    const invoice = req.body.invoice
+    if (demoInvoices.indexOf(invoice.id) > 0) {
+        res.send('This invoice is for demonstration purposes and cannot be edited. Please make a new invoice to test features!')
+        return
+    }
+    next()
+}
 
 //routes
 app.get('/', (req, res) => {
@@ -41,24 +57,25 @@ app.get('/invoices', async (req, res) => {
         res.send(results)
     } catch (error) {
         console.log(error)
+        res.send(error)
     }
 })
 //retrieve and send invoice by ID
 app.get('/invoices/:id', async (req, res) => {
     //pull invoices form DB
     const invoiceID = (req.params.id)
-    console.log(invoiceID)
     try {
         const results = await Invoice.findOne({ id: invoiceID })
         // const results = await Invoice.findById(invoiceID)
         res.send(results)
     } catch (error) {
         console.log(error)
+        res.send(error)
     }
 })
 
 // save an invoice
-app.post('/save', async (req, res) => {
+app.post('/save', checkDemo, async (req, res) => {
     const invoice = req.body.invoice
     let editInvoice = await Invoice.findById(invoice._id)
     try {
@@ -81,30 +98,33 @@ app.post('/save', async (req, res) => {
         }
     } catch (error) {
         console.log(error)
+        res.send(error)
     }
 })
 
 // mark current invoice as 'paid'
-app.post('/paid', async (req, res) => {
+app.post('/paid', checkDemo, async (req, res) => {
+    const invoice = req.body.invoice
     try {
-        const invoice = req.body.invoice
         const result = await Invoice.findById(invoice._id)
         result.status = 'paid'
         await result.save()
         res.send(`${invoice.id} has been marked as paid`)
     } catch (error) {
         console.log(error)
+        res.send(error)
     }
 })
 
 // delete a current invoice
-app.delete('/delete', async (req, res) => {
+app.delete('/delete', checkDemo, async (req, res) => {
+    const invoice = req.body.invoice
     try {
-        const invoice = req.body.invoice
         await Invoice.findByIdAndDelete(invoice._id)
         res.send(`${invoice.id} has been deleted`)
     } catch (error) {
         console.log(error)
+        res.send(error)
     }
 })
 
