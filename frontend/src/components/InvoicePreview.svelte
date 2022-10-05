@@ -3,10 +3,9 @@
   import { theme } from "../store";
   import Status from "./Status.svelte";
   export let invoice;
-  export let index;
 </script>
 
-<a href={`#/invoice/${index}`} id="invoice-preview" class={$theme}>
+<a href={`#/invoice/${invoice._id}`} id="invoice-preview" class={$theme}>
   <h3><span>#</span>{invoice.id}</h3>
   <span>Due {invoice.paymentDue}</span>
   <p>{invoice.clientName}</p>

@@ -1,6 +1,7 @@
 <script>
   import { pop } from "svelte-spa-router";
-  import { theme, allInvoices } from "../store.js";
+  import { theme } from "../store.js";
+  import { getInvoiceDetail } from "../utilities/getInvoices";
   import Status from "../components/Status.svelte";
   import ButtonInvoice from "../components/Invoice Form/Button-Invoice.svelte";
   import ButtonDelete from "../components/Buttons/Button-Delete.svelte";
@@ -9,11 +10,24 @@
   import InvoiceForm from "../components/Invoice Form/InvoiceForm.svelte";
   import Background from "../components/Invoice Form/Background.svelte";
   import ConfirmDelete from "../components/ConfirmDelete.svelte";
+  import Spinner from "../components/spinner.svelte";
+  import InfoBox from "../components/InfoBox.svelte";
 
   export let params = {};
 
-  //isolate information from the store of invoices
-  let result = $allInvoices[params.id];
+  let invoice;
+  let message;
+  async function findInvoice() {
+    try {
+      const result = await getInvoiceDetail(params.id);
+      invoice = result.data;
+    } catch (error) {
+      console.log(error);
+      message = error.message;
+      invoice = "none";
+    }
+  }
+  findInvoice();
 
   //variable and function to show/hide modal
   let showModal = false;
@@ -36,97 +50,107 @@
   };
 </script>
 
+<InfoBox {findInvoice} />
+
 <!-- clicking above button runs function that reveals invoice -->
 {#if visible}
-  <InvoiceForm {openForm} invoice={result} />
+  <InvoiceForm {openForm} {invoice} />
   <Background />
 {/if}
 
 {#if showModal}
-  <ConfirmDelete invoice={result} {toggleModal} />
+  <ConfirmDelete {invoice} {toggleModal} />
   <Background />
 {/if}
 
-<article id="invoice-detail">
-  <header>
-    <ButtonGoBack
-      click={() => {
-        pop();
-      }}
-    />
-  </header>
-  <section class={`status background ${$theme}`}>
-    <p>Status</p>
-    <Status status={result.status} />
-    <div class="action-buttons">
+{#if message}
+  <h1>Hit an error... {message}. Please refresh and try again.</h1>
+{/if}
+
+{#if !invoice}
+  <Spinner />
+{:else}
+  <article id="invoice-detail">
+    <header>
+      <ButtonGoBack
+        click={() => {
+          pop();
+        }}
+      />
+    </header>
+    <section class={`status background ${$theme}`}>
+      <p>Status</p>
+      <Status status={invoice.status} />
+      <div class="action-buttons">
+        <ButtonInvoice style={"edit"} {openForm} />
+        <ButtonDelete {toggleModal} />
+        <ButtonPaid {invoice} />
+      </div>
+    </section>
+    <section class={`details background ${$theme}`}>
+      <div class="invoice-header">
+        <h3>#{invoice.id}</h3>
+        <p>{invoice.description}</p>
+      </div>
+      <div class="address">
+        <p>{invoice.senderAddress.street}</p>
+        <p>{invoice.senderAddress.city}</p>
+        <p>{invoice.senderAddress.postCode}</p>
+        <p>{invoice.senderAddress.country}</p>
+      </div>
+      <div class="invoice-date">
+        <p>Invoice Date</p>
+        <h2>{invoice.createdAt}</h2>
+      </div>
+      <div class="payment-date">
+        <p>Payment Date</p>
+        <h2>{invoice.paymentDue}</h2>
+      </div>
+      <div class="bill-to">
+        <p>Bill To</p>
+        <h2>{invoice.clientName}</h2>
+        <p>{invoice.clientAddress.street}</p>
+        <p>{invoice.clientAddress.city}</p>
+        <p>{invoice.clientAddress.postCode}</p>
+        <p>{invoice.clientAddress.country}</p>
+      </div>
+      <div class="sent-to">
+        <p>Sent To</p>
+        <h2>{invoice.clientEmail}</h2>
+      </div>
+
+      <section class={`invoice-items ${$theme}`}>
+        <ul role="list">
+          <li class="items-header">
+            <p class="header-item-name">Item Name</p>
+            <p class="header-item-qty">Qty</p>
+            <p class="header-item-price">Price</p>
+            <p class="header-item-total">Total</p>
+          </li>
+          {#each invoice.items as item}
+            <li>
+              <p class="item-name">{item.name}</p>
+              <p class="item-qty">{item.quantity}<span>x</span></p>
+              <p class="item-price">£{item.price.toFixed(2)}</p>
+              <p class="item-total">£{item.total.toFixed(2)}</p>
+            </li>
+          {/each}
+        </ul>
+      </section>
+
+      <section class={`total ${$theme}`}>
+        <p>Amount Due</p>
+        <h2 class="total-amount">£{invoice.total.toFixed(2)}</h2>
+      </section>
+    </section>
+
+    <footer class={`background ${$theme}`}>
       <ButtonInvoice style={"edit"} {openForm} />
       <ButtonDelete {toggleModal} />
-      <ButtonPaid invoice={result} />
-    </div>
-  </section>
-  <section class={`details background ${$theme}`}>
-    <div class="invoice-header">
-      <h3>#{result.id}</h3>
-      <p>{result.description}</p>
-    </div>
-    <div class="address">
-      <p>{result.senderAddress.street}</p>
-      <p>{result.senderAddress.city}</p>
-      <p>{result.senderAddress.postCode}</p>
-      <p>{result.senderAddress.country}</p>
-    </div>
-    <div class="invoice-date">
-      <p>Invoice Date</p>
-      <h2>{result.createdAt}</h2>
-    </div>
-    <div class="payment-date">
-      <p>Payment Date</p>
-      <h2>{result.paymentDue}</h2>
-    </div>
-    <div class="bill-to">
-      <p>Bill To</p>
-      <h2>{result.clientName}</h2>
-      <p>{result.clientAddress.street}</p>
-      <p>{result.clientAddress.city}</p>
-      <p>{result.clientAddress.postCode}</p>
-      <p>{result.clientAddress.country}</p>
-    </div>
-    <div class="sent-to">
-      <p>Sent To</p>
-      <h2>{result.clientEmail}</h2>
-    </div>
-
-    <section class={`invoice-items ${$theme}`}>
-      <ul role="list">
-        <li class="items-header">
-          <p class="header-item-name">Item Name</p>
-          <p class="header-item-qty">Qty</p>
-          <p class="header-item-price">Price</p>
-          <p class="header-item-total">Total</p>
-        </li>
-        {#each result.items as item}
-          <li>
-            <p class="item-name">{item.name}</p>
-            <p class="item-qty">{item.quantity}<span>x</span></p>
-            <p class="item-price">£{item.price.toFixed(2)}</p>
-            <p class="item-total">£{item.total.toFixed(2)}</p>
-          </li>
-        {/each}
-      </ul>
-    </section>
-
-    <section class={`total ${$theme}`}>
-      <p>Amount Due</p>
-      <h2 class="total-amount">£{result.total.toFixed(2)}</h2>
-    </section>
-  </section>
-
-  <footer class={`background ${$theme}`}>
-    <ButtonInvoice style={"edit"} {openForm} />
-    <ButtonDelete {toggleModal} />
-    <ButtonPaid invoice={result} />
-  </footer>
-</article>
+      <ButtonPaid {invoice} {findInvoice} />
+    </footer>
+  </article>
+{/if}
 
 <style>
   /* light and dark themes */

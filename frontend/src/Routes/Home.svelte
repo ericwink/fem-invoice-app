@@ -8,6 +8,7 @@
   import Background from "../components/Invoice Form/Background.svelte";
   import NoResults from "../components/NoResults.svelte";
   import FilterOptions from "../components/FilterOptions.svelte";
+  import InfoBox from "../components/InfoBox.svelte";
 
   //variable to determine display visibility of filter options box
   let filterOptionsVisible = false;
@@ -66,10 +67,19 @@
   };
 </script>
 
+<InfoBox findInvoice={null} />
+
 <header id="home" class={$theme}>
   <div class="invoice-count">
     <h1>Invoices</h1>
-    <p>{invoiceCount} invoices</p>
+
+    {#if !invoiceCount}
+      <p>0 invoices</p>
+    {:else if invoiceCount === 1}
+      <p>{invoiceCount} invoice</p>
+    {:else}
+      <p>{invoiceCount} invoices</p>
+    {/if}
   </div>
 
   <FilterOptions {updateResults} {filterOptionsVisible} bind:paid bind:pending bind:draft />
@@ -77,8 +87,8 @@
 </header>
 
 <ul>
-  {#each results as invoice, index}
-    <InvoicePreview {invoice} {index} />
+  {#each results as invoice}
+    <InvoicePreview {invoice} />
   {/each}
 </ul>
 

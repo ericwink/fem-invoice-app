@@ -1,15 +1,14 @@
 <script>
   import { submitInvoice } from "../../utilities/submitInvoice";
   export let invoice;
+
+  async function handleClick() {
+    await submitInvoice(invoice, "paid");
+  }
 </script>
 
 {#if invoice.status === "pending"}
-  <button
-    on:click={() => {
-      submitInvoice(invoice, "paid");
-    }}
-    class="btn paid-btn">Mark as Paid</button
-  >
+  <button on:click={handleClick} class="btn paid-btn">Mark as Paid</button>
 {/if}
 
 <style>

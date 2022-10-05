@@ -14,8 +14,14 @@ async function connectMongoose() {
         console.log(error)
     }
 }
-
 connectMongoose()
+
+let prefix = 'AB'
+let suffix = 1001
+
+function updateID() {
+
+}
 
 //middleware
 app.use(express.json());
@@ -33,14 +39,24 @@ app.get('/invoices', async (req, res) => {
     try {
         const results = await Invoice.find()
         res.send(results)
-        console.log('invoices sent to client')
+    } catch (error) {
+        console.log(error)
+    }
+})
+//retrieve and send invoice by ID
+app.get('/invoices/:id', async (req, res) => {
+    //pull invoices form DB
+    const invoiceID = (req.params.id)
+    try {
+        const results = await Invoice.findById(invoiceID)
+        res.send(results)
     } catch (error) {
         console.log(error)
     }
 })
 
-// create new invoice
-app.post('/new', async (req, res) => {
+// save an invoice
+app.post('/save', async (req, res) => {
     const invoice = req.body.invoice
     let editInvoice = await Invoice.findById(invoice._id)
     try {
@@ -48,34 +64,21 @@ app.post('/new', async (req, res) => {
             await Invoice.findOneAndReplace(
                 { _id: invoice._id },
                 invoice)
-            return res.send('Invoice edited')
-        }
-        //check if invoice reiceved is a draft
-        if (invoice.status === 'draft') {
-            res.send('Draft recieved')
+            return res.send(`Invoice ${invoice._id} has been updated!`)
         }
         //save new invoice
         const newInvoice = new Invoice(invoice)
+        newInvoice.id = (prefix + suffix)
+        suffix = suffix + 1
         await newInvoice.save()
-        console.log(newInvoice)
-        res.send('Invoice recieved')
+        //check if invoice reiceved is a draft
+        if (invoice.status === 'draft') {
+            res.send('Draft saved successfully!')
+        } else {
+            res.send('Invoice saved successfully!')
+        }
     } catch (error) {
         console.log(error)
-    }
-})
-
-// edit a current invoice
-app.post('/edit', async (req, res) => {
-
-    try {
-        const invoice = req.body.invoice
-        const result = await Invoice.findById(invoice._id)
-        result = invoice
-        await result.save()
-        console.log(`${invoice._id} edited`)
-        res.send(`${invoice._id} edited`)
-    } catch (error) {
-
     }
 })
 
@@ -86,8 +89,7 @@ app.post('/paid', async (req, res) => {
         const result = await Invoice.findById(invoice._id)
         result.status = 'paid'
         await result.save()
-        console.log(`${invoice._id} marked as paid`)
-        res.send(`${invoice._id} marked as paid`)
+        res.send(`${invoice._id} has been marked as paid`)
     } catch (error) {
         console.log(error)
     }
@@ -98,8 +100,7 @@ app.delete('/delete', async (req, res) => {
     try {
         const invoice = req.body.invoice
         await Invoice.findByIdAndDelete(invoice._id)
-        console.log(`${invoice._id} deleted`)
-        res.send(`${invoice._id} deleted`)
+        res.send(`${invoice._id} has been deleted`)
     } catch (error) {
         console.log(error)
     }

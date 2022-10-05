@@ -1,23 +1,29 @@
 <script>
-  import { theme } from "../store";
-  import { submitInvoice } from "../utilities/submitInvoice";
-  export let invoice;
-  export let toggleModal;
+  import { theme, globalMessage } from "../store";
+  import Background from "./Invoice Form/Background.svelte";
+  export let findInvoice;
 
-  async function confirmDelete() {
-    await submitInvoice(invoice, "delete");
-    toggleModal();
+  function clearMessage() {
+    if ($globalMessage.includes("deleted")) {
+      window.location.replace("http://127.0.0.1:5173/");
+      globalMessage.update(current => (current = null));
+      return;
+    }
+    globalMessage.update(current => (current = null));
+    findInvoice();
   }
 </script>
 
-<article class={$theme}>
-  <h1>Confirm Deletion</h1>
-  <p>Are you sure you want to delete invoice #{invoice.id}? This action cannot be undone</p>
-  <div class="buttons">
-    <button on:click={toggleModal} class={`btn cancel-btn ${$theme}`}>Cancel</button>
-    <button on:click={confirmDelete} class={`btn delete-btn ${$theme}`}>Delete</button>
-  </div>
-</article>
+{#if $globalMessage}
+  <article class={$theme}>
+    <h1>Attention:</h1>
+    <p>{$globalMessage}</p>
+    <div class="buttons">
+      <button on:click={clearMessage} class={`btn cancel-btn ${$theme}`}>OK</button>
+    </div>
+  </article>
+  <Background />
+{/if}
 
 <style>
   article {
@@ -46,11 +52,6 @@
     align-self: flex-end;
   }
 
-  button.delete-btn {
-    background-color: var(--clr-full-red);
-    color: var(--clr-neutral-100);
-  }
-
   button.cancel-btn.dark {
     background-color: var(--clr-neutral-600);
     color: var(--clr-neutral-100);
@@ -69,13 +70,6 @@
       cursor: pointer;
       background-color: var(--clr-neutral-200);
       color: var(--clr-neutral-300);
-    }
-  }
-
-  @media (hover: hover) {
-    button.delete-btn:hover {
-      cursor: pointer;
-      background-color: var(--clr-pale-red);
     }
   }
 </style>
