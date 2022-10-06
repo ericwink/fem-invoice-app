@@ -171,6 +171,7 @@
   /* mobile and basics */
 
   #invoice-form {
+    position: relative;
     padding: 1em 1em;
     width: 100vw;
     overflow-y: auto;
@@ -233,7 +234,6 @@
     transform: translateX(-50%);
     padding: 1em;
     display: flex;
-    align-items: center;
     justify-content: space-around;
   }
   footer.dark {
@@ -282,7 +282,6 @@
     }
 
     footer {
-      justify-content: flex-end;
       gap: 1em;
     }
   }
@@ -295,7 +294,7 @@
       height: 100vh;
       left: 80px;
       top: 0;
-      z-index: 1;
+      z-index: 100;
     }
 
     footer {
