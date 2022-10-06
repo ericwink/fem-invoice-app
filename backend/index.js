@@ -1,15 +1,20 @@
 const express = require('express')
 const app = express()
-const port = 3000;
+const port = process.env.PORT || 3000;
 const cors = require('cors')
 const mongoose = require('mongoose')
+require('dotenv').config()
+
 // const data = require('./data.json')
 
 const { Invoice } = require('./models/invoiceSchema.js')
+const demoInvoices = ['RT3080', 'XM9141', 'RG0314', 'RT2080', 'AA1449', 'TY9141', 'FV2353']
+const mongoLink = `mongodb+srv://${process.env.MONGO_LOGIN}:${process.env.MONGO_SECRET}@cluster0.1sbqg.mongodb.net/?retryWrites=true&w=majority`
 
 async function connectMongoose() {
     try {
-        await mongoose.connect('mongodb://localhost:27017/invoiceapp')
+        // await mongoose.connect('mongodb://localhost:27017/invoiceapp')
+        await mongoose.connect(mongoLink)
         console.log('Invoice Database Connected')
     } catch (error) {
         console.log(error)
@@ -17,7 +22,6 @@ async function connectMongoose() {
 }
 connectMongoose()
 
-const demoInvoices = ['RT3080', 'XM9141', 'RG0314', 'RT2080', 'AA1449', 'TY9141', 'FV2353']
 
 // function addData() {
 //     for (const invoice of data) {
@@ -47,7 +51,7 @@ const checkDemo = function (req, res, next) {
 
 //routes
 app.get('/', (req, res) => {
-    res.send('Hello World')
+    res.send('Hello World - InvoiceApp API!')
 })
 
 //retrieve and send all invoices in DB
