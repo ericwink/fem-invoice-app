@@ -82,7 +82,7 @@
     {/if}
   </div>
 
-  <FilterOptions {updateResults} {filterOptionsVisible} bind:paid bind:pending bind:draft />
+  <FilterOptions {updateResults} bind:filterOptionsVisible bind:paid bind:pending bind:draft />
   <ButtonInvoice style={"new"} {openForm} />
 </header>
 
