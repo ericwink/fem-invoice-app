@@ -35,9 +35,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
+//checks to see if invoice is part of demo array, and if so, deny action
 const checkDemo = function (req, res, next) {
     const invoice = req.body.invoice
-    if (demoInvoices.indexOf(invoice.id) > 0) {
+    if (demoInvoices.indexOf(invoice.id) >= 0) {
         res.send('This invoice is for demonstration purposes and cannot be edited. Please make a new invoice to test features!')
         return
     }

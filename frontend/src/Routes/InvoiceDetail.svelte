@@ -103,7 +103,7 @@
         <h2>{invoice.createdAt}</h2>
       </div>
       <div class="payment-date">
-        <p>Payment Date</p>
+        <p>Payment Due</p>
         <h2>{invoice.paymentDue}</h2>
       </div>
       <div class="bill-to">
@@ -131,8 +131,8 @@
             <li>
               <p class="item-name">{item.name}</p>
               <p class="item-qty">{item.quantity}<span>x</span></p>
-              <p class="item-price">£{item.price.toFixed(2)}</p>
-              <p class="item-total">£{item.total.toFixed(2)}</p>
+              <p class="item-price">${item.price.toFixed(2)}</p>
+              <p class="item-total">${item.total.toFixed(2)}</p>
             </li>
           {/each}
         </ul>
@@ -140,14 +140,14 @@
 
       <section class={`total ${$theme}`}>
         <p>Amount Due</p>
-        <h2 class="total-amount">£{invoice.total.toFixed(2)}</h2>
+        <h2 class="total-amount">${invoice.total.toFixed(2)}</h2>
       </section>
     </section>
 
     <footer class={`background ${$theme}`}>
       <ButtonInvoice style={"edit"} {openForm} />
       <ButtonDelete {toggleModal} />
-      <ButtonPaid {invoice} {findInvoice} />
+      <ButtonPaid {invoice} />
     </footer>
   </article>
 {/if}

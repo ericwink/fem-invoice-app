@@ -16,6 +16,10 @@
   const date = new Date();
   const today = date.toISOString().split("T")[0];
 
+  // const tomorrow = new Date();
+  // tomorrow.setDate(date.getDate() + terms);
+  // console.log(tomorrow.toISOString().split("T")[0]);
+
   //declare new array to house items
   let itemList = [];
 
@@ -31,9 +35,9 @@
     newClientAddress = new ClientAddress(invoice.clientAddress.street, invoice.clientAddress.city, invoice.clientAddress.postCode, invoice.clientAddress.country);
     newInvoice = new Invoice(invoice.id, invoice.createdAt, invoice.paymentDue, invoice.description, invoice.paymentTerms, invoice.clientName, invoice.clientEmail, invoice.status, newSenderAddress, newClientAddress, invoice._id);
   } else {
-    newSenderAddress = new SenderAddress("", "", "", "");
-    newClientAddress = new ClientAddress("", "", "", "");
-    newInvoice = new Invoice("tempID", today, "10/30/2022", "", 30, "", "", "draft", newSenderAddress, newClientAddress);
+    newSenderAddress = new SenderAddress();
+    newClientAddress = new ClientAddress();
+    newInvoice = new Invoice("tempID", today, "", "", 30, "", "", "draft", newSenderAddress, newClientAddress);
   }
 </script>
 
@@ -238,6 +242,8 @@
   footer.light {
     box-shadow: 0px -16px 50px rgba(0, 0, 0, 0.102);
   }
+
+  /* style date picker */
 
   /* tablet style @ 600px */
   @media (min-width: 600px) {
