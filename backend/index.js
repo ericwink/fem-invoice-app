@@ -3,7 +3,7 @@ const app = express()
 const port = 3000;
 const cors = require('cors')
 const mongoose = require('mongoose')
-const data = require('./data.json')
+// const data = require('./data.json')
 
 const { Invoice } = require('./models/invoiceSchema.js')
 

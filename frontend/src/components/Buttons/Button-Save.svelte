@@ -10,7 +10,6 @@
 
   async function updateAndSend() {
     newInvoice = updateInvoice(itemList, newInvoice);
-    console.log(newInvoice);
     await submitInvoice(newInvoice, "final");
     getInvoices();
     openForm();

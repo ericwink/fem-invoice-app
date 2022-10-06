@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { theme, allInvoices } from "../store";
+  import { theme, allInvoices, globalMessage } from "../store";
   import { getInvoices } from "../utilities/getInvoices";
   import ButtonInvoice from "../components/Invoice Form/Button-Invoice.svelte";
   import InvoicePreview from "../components/InvoicePreview.svelte";
@@ -99,7 +99,9 @@
 <!-- clicking above button runs function that reveals invoice -->
 {#if visible}
   <InvoiceForm {openForm} invoice={null} />
-  <Background />
+  {#if !$globalMessage}
+    <Background />
+  {/if}
 {/if}
 
 <style>

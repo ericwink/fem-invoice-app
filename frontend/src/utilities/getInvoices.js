@@ -12,7 +12,8 @@ async function getInvoices() {
 
 async function getInvoiceDetail(id) {
     let result = await axios.get(`http://localhost:3000/invoices/${id}`);
-    return result
+    console.log(result.data)
+    return result.data
 }
 
 export { getInvoices, getInvoiceDetail }

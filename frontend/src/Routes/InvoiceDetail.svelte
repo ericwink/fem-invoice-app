@@ -1,6 +1,6 @@
 <script>
   import { pop } from "svelte-spa-router";
-  import { theme } from "../store.js";
+  import { theme, globalMessage } from "../store.js";
   import { getInvoiceDetail } from "../utilities/getInvoices";
   import Status from "../components/Status.svelte";
   import ButtonInvoice from "../components/Invoice Form/Button-Invoice.svelte";
@@ -19,8 +19,7 @@
   let message;
   async function findInvoice() {
     try {
-      const result = await getInvoiceDetail(params.id);
-      invoice = result.data;
+      invoice = await getInvoiceDetail(params.id);
     } catch (error) {
       console.log(error);
       message = error.message;
@@ -55,7 +54,9 @@
 <!-- clicking above button runs function that reveals invoice -->
 {#if visible}
   <InvoiceForm {openForm} {invoice} />
-  <Background />
+  {#if !$globalMessage}
+    <Background />
+  {/if}
 {/if}
 
 {#if showModal}

@@ -35,8 +35,8 @@
     newClientAddress = new ClientAddress(invoice.clientAddress.street, invoice.clientAddress.city, invoice.clientAddress.postCode, invoice.clientAddress.country);
     newInvoice = new Invoice(invoice.id, invoice.createdAt, invoice.paymentDue, invoice.description, invoice.paymentTerms, invoice.clientName, invoice.clientEmail, invoice.status, newSenderAddress, newClientAddress, invoice._id);
   } else {
-    newSenderAddress = new SenderAddress();
-    newClientAddress = new ClientAddress();
+    newSenderAddress = new SenderAddress("", "", "", "");
+    newClientAddress = new ClientAddress("", "", "", "");
     newInvoice = new Invoice("tempID", today, "", "", 30, "", "", "draft", newSenderAddress, newClientAddress);
   }
 </script>
