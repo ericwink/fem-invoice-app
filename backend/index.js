@@ -13,8 +13,8 @@ const mongoLink = `mongodb+srv://${process.env.MONGO_LOGIN}:${process.env.MONGO_
 
 async function connectMongoose() {
     try {
-        // await mongoose.connect('mongodb://localhost:27017/invoiceapp')
-        await mongoose.connect(mongoLink)
+        await mongoose.connect('mongodb://localhost:27017/invoiceapp')
+        // await mongoose.connect(mongoLink)
         console.log('Invoice Database Connected')
     } catch (error) {
         console.log(error)
@@ -31,8 +31,24 @@ connectMongoose()
 // }
 // addData()
 
-let prefix = 'AB'
-let suffix = 1001
+//due to hosting location spin-down, need to create dynamic ID
+async function calculateInvoiceID() {
+    //look through all invoices
+    let result = await Invoice.find({})
+    let finalID = result[result.length - 1].id
+    //if final invoice starts with AB, generate next invoice ID
+    if (finalID.includes('AB')) {
+        //split to get the number, which is a string
+        let num = parseInt(finalID.split('B')[1])
+        //add one to get next invoice ID
+        num = num + 1
+        //return final invoice ID
+        return `AB${num}`
+        // if last invoice isn't AB, return AB1001
+    } else {
+        return 'AB1001'
+    }
+}
 
 //middleware
 app.use(express.json());
@@ -75,7 +91,7 @@ app.get('/invoices/:id', async (req, res) => {
         res.send(results)
     } catch (error) {
         console.log(error)
-        res.send(error)
+        res.send(error._message)
     }
 })
 
@@ -92,8 +108,7 @@ app.post('/save', checkDemo, async (req, res) => {
         }
         //save new invoice
         const newInvoice = new Invoice(invoice)
-        newInvoice.id = (prefix + suffix)
-        suffix = suffix + 1
+        newInvoice.id = await calculateInvoiceID()
         await newInvoice.save()
         //check if invoice reiceved is a draft
         if (invoice.status === 'draft') {
@@ -103,7 +118,7 @@ app.post('/save', checkDemo, async (req, res) => {
         }
     } catch (error) {
         console.log(error)
-        res.send(error)
+        res.send(error._message)
     }
 })
 
@@ -117,7 +132,7 @@ app.post('/paid', checkDemo, async (req, res) => {
         res.send(`${invoice.id} has been marked as paid`)
     } catch (error) {
         console.log(error)
-        res.send(error)
+        res.send(error._message)
     }
 })
 
@@ -129,7 +144,7 @@ app.delete('/delete', checkDemo, async (req, res) => {
         res.send(`${invoice.id} has been deleted`)
     } catch (error) {
         console.log(error)
-        res.send(error)
+        res.send(error._message)
     }
 })
 
