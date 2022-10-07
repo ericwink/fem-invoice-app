@@ -13,8 +13,8 @@ const mongoLink = `mongodb+srv://${process.env.MONGO_LOGIN}:${process.env.MONGO_
 
 async function connectMongoose() {
     try {
-        await mongoose.connect('mongodb://localhost:27017/invoiceapp')
-        // await mongoose.connect(mongoLink)
+        // await mongoose.connect('mongodb://localhost:27017/invoiceapp')
+        await mongoose.connect(mongoLink)
         console.log('Invoice Database Connected')
     } catch (error) {
         console.log(error)
