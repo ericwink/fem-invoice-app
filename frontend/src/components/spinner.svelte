@@ -10,8 +10,8 @@
 <style>
   #spinner {
     position: absolute;
-    top: 48%;
-    left: 48%;
+    top: calc(50% - 72px);
+    left: calc(50% - 40px);
   }
   .lds-ellipsis {
     display: inline-block;
