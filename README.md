@@ -36,7 +36,6 @@ Users should be able to:
 
 ### Video
 
-Video Demo of Invoice App:
 https://user-images.githubusercontent.com/105669475/194591755-d33df555-59c5-496d-b912-1f589f6e1bc6.mov
 
 ### Links
