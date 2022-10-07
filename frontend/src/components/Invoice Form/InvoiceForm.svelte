@@ -16,10 +16,6 @@
   const date = new Date();
   const today = date.toISOString().split("T")[0];
 
-  // const tomorrow = new Date();
-  // tomorrow.setDate(date.getDate() + terms);
-  // console.log(tomorrow.toISOString().split("T")[0]);
-
   //declare new array to house items
   let itemList = [];
 
@@ -39,6 +35,14 @@
     newClientAddress = new ClientAddress("", "", "", "");
     newInvoice = new Invoice("tempID", today, "", "", 30, "", "", "draft", newSenderAddress, newClientAddress);
   }
+
+  //get screen size and set the invoiceForm height variable. Prevent the form being cut off on mobile devices due to address bars.
+  function setFormHeight() {
+    const root = document.documentElement;
+    root.style.setProperty("--invoice-form-height", `${window.innerHeight - 72}px`);
+  }
+  window.addEventListener("resize", setFormHeight);
+  setFormHeight();
 </script>
 
 <section id="invoice-form" transition:fly={{ duration: 600, x: -100 }} class={$theme}>
@@ -171,15 +175,13 @@
   /* mobile and basics */
 
   #invoice-form {
-    position: relative;
+    position: absolute;
+    height: var(--invoice-form-height);
     padding: 1em 1em;
     width: 100vw;
     overflow-y: auto;
-    /* height is full height of viewport minus the navbar */
-    height: calc(100vh - 72px);
-    position: absolute;
     left: 0;
-    top: 4.5em;
+    top: 0;
     z-index: 2;
   }
 
@@ -227,7 +229,7 @@
   }
 
   footer {
-    margin-top: 4em;
+    margin-top: 2em;
     position: absolute;
     width: 100%;
     left: 50%;

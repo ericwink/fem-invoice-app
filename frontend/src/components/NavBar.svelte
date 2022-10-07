@@ -37,7 +37,6 @@
     height: 72px;
     display: grid;
     grid-template-columns: 2fr 0.5fr 0.5fr;
-    margin-bottom: 2em;
   }
   .logo-box-dark-purple {
     height: 72px;

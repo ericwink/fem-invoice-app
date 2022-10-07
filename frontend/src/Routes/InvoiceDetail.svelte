@@ -16,13 +16,10 @@
   export let params = {};
 
   let invoice;
-  let message;
   async function findInvoice() {
     try {
       invoice = await getInvoiceDetail(params.id);
     } catch (error) {
-      console.log(error);
-      message = error.message;
       invoice = "none";
     }
   }
@@ -62,10 +59,6 @@
 {#if showModal}
   <ConfirmDelete {invoice} {toggleModal} />
   <Background />
-{/if}
-
-{#if message}
-  <h1>Hit an error... {message}. Please refresh and try again.</h1>
 {/if}
 
 {#if !invoice}
@@ -165,6 +158,10 @@
   }
 
   /* Styles */
+
+  #invoice-detail {
+    margin-top: 2em;
+  }
 
   #invoice-detail .status {
     display: flex;

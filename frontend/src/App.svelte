@@ -11,9 +11,12 @@
   };
 </script>
 
+<NavBar />
 <div id="App" class={$theme}>
-  <NavBar />
   <main class="container">
     <Router {routes} />
   </main>
 </div>
+
+<style>
+</style>

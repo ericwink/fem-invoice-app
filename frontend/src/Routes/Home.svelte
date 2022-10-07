@@ -9,6 +9,7 @@
   import NoResults from "../components/NoResults.svelte";
   import FilterOptions from "../components/FilterOptions.svelte";
   import InfoBox from "../components/InfoBox.svelte";
+  import Spinner from "../components/spinner.svelte";
 
   //variable to determine display visibility of filter options box
   let filterOptionsVisible = false;
@@ -69,31 +70,35 @@
 
 <InfoBox findInvoice={null} />
 
-<header id="home" class={$theme}>
-  <div class="invoice-count">
-    <h1>Invoices</h1>
+{#if $allInvoices.indexOf("empty") === 0}
+  <Spinner />
+{:else}
+  <header id="home" class={$theme}>
+    <div class="invoice-count">
+      <h1>Invoices</h1>
 
-    {#if !invoiceCount}
-      <p>0 invoices</p>
-    {:else if invoiceCount === 1}
-      <p>{invoiceCount} invoice</p>
-    {:else}
-      <p>{invoiceCount} invoices</p>
-    {/if}
-  </div>
+      {#if !invoiceCount}
+        <p>0 invoices</p>
+      {:else if invoiceCount === 1}
+        <p>{invoiceCount} invoice</p>
+      {:else}
+        <p>{invoiceCount} invoices</p>
+      {/if}
+    </div>
 
-  <FilterOptions {updateResults} bind:filterOptionsVisible bind:paid bind:pending bind:draft />
-  <ButtonInvoice style={"new"} {openForm} />
-</header>
+    <FilterOptions {updateResults} bind:filterOptionsVisible bind:paid bind:pending bind:draft />
+    <ButtonInvoice style={"new"} {openForm} />
+  </header>
 
-<ul>
-  {#each results as invoice}
-    <InvoicePreview {invoice} />
-  {/each}
-</ul>
+  <ul>
+    {#each results as invoice}
+      <InvoicePreview {invoice} />
+    {/each}
+  </ul>
 
-{#if results.length === 0}
-  <NoResults />
+  {#if results.length === 0}
+    <NoResults />
+  {/if}
 {/if}
 
 <!-- clicking above button runs function that reveals invoice -->
@@ -109,6 +114,8 @@
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
     margin-bottom: 2em;
+    margin-top: 2em;
+    position: relative;
   }
   header.dark {
     color: var(--clr-neutral-100);

@@ -56,7 +56,13 @@
   --ls-300: -0.63;
   --ls-400: -0.8;
   --ls-500: -1;
+  
+  /* Default for invoice form height - JS function is used to calculate screen height for better experience on mobile */
+  --invoice-form-height: calc(100vh - 72px);
 }
+
+
+
 
 /* Box sizing rules */
 *,

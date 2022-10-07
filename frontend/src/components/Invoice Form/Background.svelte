@@ -6,7 +6,7 @@
     opacity: 50%;
     position: absolute;
     z-index: 0;
-    top: 72px;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;

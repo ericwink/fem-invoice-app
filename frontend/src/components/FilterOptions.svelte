@@ -112,7 +112,7 @@
     gap: 0.5em;
     padding: 1em 3em 1em 1em;
     z-index: 2;
-    top: 10em;
+    top: 4em;
     border: none;
     box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.324);
   }
@@ -132,7 +132,7 @@
   /* desktop view */
   @media (min-width: 950px) {
     fieldset {
-      top: 5em;
+      top: 4em;
     }
   }
 </style>

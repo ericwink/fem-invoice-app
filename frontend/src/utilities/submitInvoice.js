@@ -44,7 +44,7 @@ async function submitInvoice(invoice, endpoint) {
         }
 
     } catch (error) {
-        console.log(error);
+        globalMessage.update(current => (current = `${error.message}, please try again later`));
     }
 }
 
